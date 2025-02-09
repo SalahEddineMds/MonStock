@@ -14,6 +14,7 @@
                     <option value="Ordinateur">Ordinateur</option>
                     <option value="Imprimante">Imprimante</option>
                     <option value="Phone">Phone</option>
+                    <option value="Accessoire">Accessoire</option>
                 </select>
 
                 <label for="quantite">Quantité</label>
