@@ -1,14 +1,26 @@
 <?php
 
 include("connexionbd.php");
-function getArticle() {
-    $sql = "SELECT * FROM article";
+function getArticle($id=null) {
+    if (!empty($id)) {
+        $sql = "SELECT * FROM article WHERE id=?";
 
-    $req = $GLOBALS["connexion"]->prepare($sql);
+        $req = $GLOBALS["connexion"]->prepare($sql);
 
-    $req->execute();
+        $req->execute(array($id));
 
-    return $req->fetchAll();
+        return $req->fetch();
+
+    } else {
+        $sql = "SELECT * FROM article";
+
+        $req = $GLOBALS["connexion"]->prepare($sql);
+
+        $req->execute();
+
+        return $req->fetchAll();
+    }
+    
 }
 
 ?>

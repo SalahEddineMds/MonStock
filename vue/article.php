@@ -1,5 +1,9 @@
 <?php 
     include("entete.php");
+
+    if (!empty($_GET["id"])) {
+        $article = getArticle($_GET["id"]);
+    }
 ?>
 
 <div class="home-content">
@@ -7,7 +11,7 @@
         <div class="box">
             <form action="../model/ajoutArticle.php" method="post">
                 <label for="nom_article">Nom de l'article</label>
-                <input type="text" name="nom_article" id="nom_article" placeholder="Veuillez saisir le nom">
+                <input value="<?= !empty($_GET["id"]) ? $article["nom_article"] : "" ?>" type="text" name="nom_article" id="nom_article" placeholder="Veuillez saisir le nom">
 
                 <label for="categorie">Catégorie</label>
                 <select name="categorie" id="categorie">
@@ -18,16 +22,16 @@
                 </select>
 
                 <label for="quantite">Quantité</label>
-                <input type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="0">
+                <input value="<?= !empty($_GET["id"]) ? $article["quantite"] : "" ?>" type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="0">
 
                 <label for="prix_unitaire">Prix unitaire</label>
-                <input type="number" name="prix_unitaire" id="prix_unitaire" placeholder="Veuillez saisir le prix" min="0">
+                <input value="<?= !empty($_GET["id"]) ? $article["prix_unitaire"] : "" ?>" type="number" name="prix_unitaire" id="prix_unitaire" placeholder="Veuillez saisir le prix" min="0">
 
                 <label for="date_fabrication">Date de fabrication</label>
-                <input type="datetime-local" name="date_fabrication" id="date_fabrication">
+                <input value="<?= !empty($_GET["id"]) ? $article["date_fabrication"] : "" ?>" type="datetime-local" name="date_fabrication" id="date_fabrication">
 
                 <label for="date_expiration">Date d'expiration</label>
-                <input type="datetime-local" name="date_expiration" id="date_expiration">
+                <input value="<?= !empty($_GET["id"]) ? $article["date_expiration"] : "" ?>" type="datetime-local" name="date_expiration" id="date_expiration">
 
                 <button type="submit">Valider</button>
                 
@@ -52,6 +56,7 @@
                     <th>Prix unitaire</th>
                     <th>Date fabrication</th>
                     <th>Date expiration</th>
+                    <th>Action</th>
                 </tr>
                 <?php
                 $articles = getArticle();
@@ -65,6 +70,7 @@
                         <td><?=$value["prix_unitaire"]?></td>
                         <td><?=date("d/m/Y H:i:s",strtotime($value["date_fabrication"]))?></td>
                         <td><?=date("d/m/Y H:i:s",strtotime($value["date_expiration"]))?></td>
+                        <td><a href="?id=<?=$value["id"]?>"><i class='bx bx-edit-alt'></i></a></td>
                     </tr>    
                 <?php
                     }
