@@ -25,11 +25,7 @@
                 <input value="<?= !empty($_GET["id"]) ? $article["quantite"] : "" ?>" type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="0">
 
                 <label for="prix_unitaire">Prix unitaire</label>
-<<<<<<< HEAD
-                <input value="<?= !empty($_GET["id"]) ? $article["prix_unitaire"] : "" ?>" type="number" name="prix_unitaire" id="prix_unitaire" placeholder="Veuillez saisir le prix" min="0">
-=======
-                <input type="number" name="prix_unitaire" id="prix_unitaire" placeholder="Veuillez saisir le prix" min="0" step="any">
->>>>>>> e4458d3cf42edf6cda811b68273fa699db8a4f34
+                <input value="<?= !empty($_GET["id"]) ? $article["prix_unitaire"] : "" ?>" type="number" name="prix_unitaire" id="prix_unitaire" placeholder="Veuillez saisir le prix" min="0" step="any">
 
                 <label for="date_fabrication">Date de fabrication</label>
                 <input value="<?= !empty($_GET["id"]) ? $article["date_fabrication"] : "" ?>" type="datetime-local" name="date_fabrication" id="date_fabrication">
