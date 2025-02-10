@@ -1,6 +1,5 @@
 <?php
     include("connexionbd.php");
-    var_dump($_POST);
     if (!empty($_POST["nom_article"])
         && !empty($_POST["categorie"])
         && !empty($_POST["quantite"])
