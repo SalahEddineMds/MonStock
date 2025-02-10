@@ -21,7 +21,7 @@
                 <input type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="0">
 
                 <label for="prix_unitaire">Prix unitaire</label>
-                <input type="number" name="prix_unitaire" id="prix_unitaire" placeholder="Veuillez saisir le prix" min="0">
+                <input type="number" name="prix_unitaire" id="prix_unitaire" placeholder="Veuillez saisir le prix" min="0" step="any">
 
                 <label for="date_fabrication">Date de fabrication</label>
                 <input type="datetime-local" name="date_fabrication" id="date_fabrication">
