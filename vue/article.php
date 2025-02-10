@@ -9,16 +9,17 @@
 <div class="home-content">
     <div class="overview-boxes">
         <div class="box">
-            <form action="../model/ajoutArticle.php" method="post">
+            <form action=" <?= !empty($_GET["id"]) ? "../model/modifArticle.php" : "../model/ajoutArticle.php" ?>" method="post">
                 <label for="nom_article">Nom de l'article</label>
                 <input value="<?= !empty($_GET["id"]) ? $article["nom_article"] : "" ?>" type="text" name="nom_article" id="nom_article" placeholder="Veuillez saisir le nom">
+                <input value="<?= !empty($_GET["id"]) ? $article["id"] : "" ?>" type="hidden" name="id" id="id">
 
                 <label for="categorie">Catégorie</label>
                 <select name="categorie" id="categorie">
-                    <option value="Ordinateur">Ordinateur</option>
-                    <option value="Imprimante">Imprimante</option>
-                    <option value="Accessoire">Accessoire</option>
-                    <option value="Phone">Phone</option>
+                    <option <?= !empty($_GET["id"]) && $article["categorie"]=="Ordinateur" ? "selected" : "" ?> value="Ordinateur">Ordinateur</option>
+                    <option <?= !empty($_GET["id"]) && $article["categorie"]=="Imprimante" ? "selected" : "" ?> value="Imprimante">Imprimante</option>
+                    <option <?= !empty($_GET["id"]) && $article["categorie"]=="Accessoire" ? "selected" : "" ?> value="Accessoire">Accessoire</option>
+                    <option <?= !empty($_GET["id"]) && $article["categorie"]=="Phone" ? "selected" : "" ?> value="Phone">Phone</option>
                 </select>
 
                 <label for="quantite">Quantité</label>
@@ -42,6 +43,7 @@
                         <?=$_SESSION["message"]["text"]?>
                     </div>
                 <?php 
+                unset($_SESSION["message"]); // Efface le message après affichage
                 }
                 ?>
 
