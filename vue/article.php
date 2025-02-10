@@ -30,11 +30,48 @@
                 <input type="datetime-local" name="date_expiration" id="date_expiration">
 
                 <button type="submit">Valider</button>
-
+                
+                <?php
+                if (!empty($_SESSION["message"]["text"])) {
+                ?>
+                    <div class="alert <?=$_SESSION["message"]["type"]?>">
+                        <?=$_SESSION["message"]["text"]?>
+                    </div>
+                <?php 
+                }
+                ?>
 
             </form>
         </div>
-
+        <div class="box">
+            <table class="mtable">
+                <tr>
+                    <th>Nom article</th>
+                    <th>Catégorie</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire</th>
+                    <th>Date fabrication</th>
+                    <th>Date expiration</th>
+                </tr>
+                <?php
+                $articles = getArticle();
+                if (!empty($articles) && is_array( $articles )) {
+                    foreach ($articles as $key => $value) {
+                    ?>
+                    <tr>
+                        <td><?=$value["nom_article"]?></td>
+                        <td><?=$value["categorie"]?></td>
+                        <td><?=$value["quantite"]?></td>
+                        <td><?=$value["prix_unitaire"]?></td>
+                        <td><?=date("d/m/Y H:i:s",strtotime($value["date_fabrication"]))?></td>
+                        <td><?=date("d/m/Y H:i:s",strtotime($value["date_expiration"]))?></td>
+                    </tr>    
+                <?php
+                    }
+                }
+                ?>
+            </table>
+        </div>
     </div>
 </div>
 

@@ -1,9 +1,13 @@
+<?php
+  include_once("../model/function.php");
+?>
+
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../public/css/style.css" />
+    <link rel="stylesheet" href="../public/css/styles.css" />
     <!-- Boxicons CDN Link -->
     <link
       href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
@@ -60,18 +64,6 @@
             <span class="links_name">Utilisateur</span>
           </a>
         </li>
-        <!-- <li>
-          <a href="#">
-            <i class="bx bx-message" ></i>
-            <span class="links_name">Messages</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="bx bx-heart" ></i>
-            <span class="links_name">Favrorites</span>
-          </a>
-        </li> -->
         <li>
           <a href="#">
             <i class="bx bx-cog"></i>
@@ -97,7 +89,6 @@
           <i class="bx bx-search"></i>
         </div>
         <div class="profile-details">
-          <!--<img src="images/profile.jpg" alt="">-->
           <span class="admin_name">Komche</span>
           <i class="bx bx-chevron-down"></i>
         </div>

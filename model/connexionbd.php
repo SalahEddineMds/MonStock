@@ -1,4 +1,5 @@
 <?php
+    session_start();
 
     $nom_serveur = "localhost";
     $nom_base_de_donnes = "gestion_stock";
@@ -6,7 +7,7 @@
     $motpass = "";
 
     try {
-        $connexion = new PDO("mysql:host$nom_serveur;dbname=$nom_base_de_donnes", $utilisateur, $motpass);
+        $connexion = new PDO("mysql:host=$nom_serveur;dbname=$nom_base_de_donnes", $utilisateur, $motpass);
         $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         return $connexion;
