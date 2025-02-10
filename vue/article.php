@@ -5,7 +5,7 @@
 <div class="home-content">
     <div class="overview-boxes">
         <div class="box">
-            <form action="" method="post">
+            <form action="../model/ajoutArticle.php" method="post">
                 <label for="nom_article">Nom de l'article</label>
                 <input type="text" name="nom_article" id="nom_article" placeholder="Veuillez saisir le nom">
 
@@ -13,7 +13,6 @@
                 <select name="categorie" id="categorie">
                     <option value="Ordinateur">Ordinateur</option>
                     <option value="Imprimante">Imprimante</option>
-                    <option value="Phone">Phone</option>
                     <option value="Accessoire">Accessoire</option>
                 </select>
 
