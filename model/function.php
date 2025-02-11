@@ -23,4 +23,26 @@ function getArticle($id=null) {
     
 }
 
+function getClient($id=null) {
+    if (!empty($id)) {
+        $sql = "SELECT * FROM client WHERE id=?";
+
+        $req = $GLOBALS["connexion"]->prepare($sql);
+
+        $req->execute(array($id));
+
+        return $req->fetch();
+
+    } else {
+        $sql = "SELECT * FROM client";
+
+        $req = $GLOBALS["connexion"]->prepare($sql);
+
+        $req->execute();
+
+        return $req->fetchAll();
+    }
+    
+}
+
 ?>
