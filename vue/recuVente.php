@@ -7,6 +7,9 @@
 ?>
 
 <div class="home-content">
+
+        <button class="hidden-print" id="btnPrint" style="position:relative; left:42%;"><i class='bx bx-printer' ></i> Imprimer</button>
+
     <div class="page">
         <div class="cote-a-cote">
             <h2>MonStock stock</h2>
@@ -55,6 +58,11 @@
 ?>
 
 <script>
+    var btnPrint =document.querySelector("#btnPrint");
+    btnPrint.addEventListener("click", () => {
+       window.print(); 
+    });
+
     function setPrix() {
         var article = document.querySelector("#id_article");
         var quantite = document.querySelector("#quantite");
