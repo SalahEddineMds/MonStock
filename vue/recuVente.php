@@ -2,46 +2,50 @@
     include("entete.php");
 
     if (!empty($_GET["id"])) {
-        $article = getVente($_GET["id"]);
+        $ventes = getVente($_GET["id"]);
     }
 ?>
 
 <div class="home-content">
     <div class="page">
-
-    </div>
-    <div class="overview-boxes">
-        <div class="box">
-            <table class="mtable">
-                <tr>
-                    <th>Article</th>
-                    <th>Client</th>
-                    <th>Quantité</th>
-                    <th>Prix</th>
-                    <th>Date</th>
-                    <th>Action</th>
-                </tr>
-                <?php
-                $ventes = getVente();
-                if (!empty($ventes) && is_array( $ventes )) {
-                    foreach ($ventes as $key => $value) {
-                    ?>
-                    <tr>
-                        <td><?=$value["nom_article"]?></td>
-                        <td><?=$value["nom"]. " ".$value["prenom"] ?></td>
-                        <td><?=$value["quantite"]?></td>
-                        <td><?=$value["prix"]?></td>
-                        <td><?=date("d/m/Y H:i:s", strtotime($value["date_vente"]))?></td>
-                        <td><a href="recuVente.php?id=<?= $value["id"]?>"><i class='bx bx-receipt'></i></a></td>
-
-                    </tr>    
-                <?php
-                    }
-                }
-                ?>
-            </table>
+        <div class="cote-a-cote">
+            <h2>MonStock stock</h2>
+            <div>
+                <p>Reçu N° #: <?= $ventes["id"]?> </p>
+                <p>Date: <?= date("d/m/Y H:i:s", strtotime($ventes["date_vente"]))?> </p>
+            </div>
         </div>
+        <div class="cote-a-cote" style="width: 50%;">
+            <p>Nom: </p>
+            <p><?=$ventes["nom"]. " ".$ventes["prenom"] ?></p>
+        </div>
+        <div class="cote-a-cote" style="width: 50%;">
+            <p>Téléphone: </p>
+            <p><?=$ventes["telephone"]?></p>
+        </div>
+        <div class="cote-a-cote" style="width: 50%;">
+            <p>Adresse: </p>
+            <p><?=$ventes["adresse"]?></p>
+        </div>
+
+        <br>
+
+        <table class="mtable">
+                <tr>
+                    <th>Désignation</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire</th>
+                    <th>Prix total</th>
+                </tr>
+                    <tr>
+                        <td><?=$ventes["nom_article"]?></td>
+                        <td><?=$ventes["quantite"]?></td>
+                        <td><?=$ventes["prix_unitaire"]?></td>
+                        <td><?=$ventes["prix"]?></td>
+                    </tr>    
+            </table>
     </div>
+    
 </div>
 
 </section>
