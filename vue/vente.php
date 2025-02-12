@@ -84,7 +84,7 @@
                         <td><?=$value["quantite"]?></td>
                         <td><?=$value["prix"]?></td>
                         <td><?=date("d/m/Y H:i:s", strtotime($value["date_vente"]))?></td>
-                        <td><a href="?id=<?= $value["id"]?>"><i class='bx bx-edit-alt'></i></a></td>
+                        <td><a href="recuVente.php?id=<?= $value["id"]?>"><i class='bx bx-receipt'></i></a></td>
 
                     </tr>    
                 <?php
