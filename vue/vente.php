@@ -13,13 +13,13 @@
                 <input value="<?= !empty($_GET["id"]) ? $article["id"] : "" ?>" type="hidden" name="id" id="id">
 
                 <label for="id_article">Article</label>
-                <select name="id_article" id="id_article">
+                <select onchange="setPrix()" name="id_article" id="id_article">
                     <?php 
                          $articles = getArticle();
                         if (!empty($articles) && is_array($articles)) {
                             foreach ($articles as $key => $value) {
                                 ?>
-                                <option value="<?= $value["id"] ?>"><?= $value["nom_article"]. " - ". $value["quantite"]. " disponible" ?></option>
+                                <option data-prix="<?= $value["prix_unitaire"] ?>" value="<?= $value["id"] ?>"><?= $value["nom_article"]. " - ". $value["quantite"]. " disponible" ?></option>
                                 <?php
 
                             }
@@ -43,7 +43,7 @@
                 </select>
 
                 <label for="quantite">Quantité</label>
-                <input value="<?= !empty($_GET["id"]) ? $article["quantite"] : "" ?>" type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="0">
+                <input onkeyup="setPrix()" value="<?= !empty($_GET["id"]) ? $article["quantite"] : "" ?>" type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="0">
 
                 <label for="prix">Prix</label>
                 <input value="<?= !empty($_GET["id"]) ? $article["prix"] : "" ?>" type="number" name="prix" id="prix" placeholder="Veuillez saisir le prix" min="0" step="any">
@@ -101,3 +101,15 @@
 <?php 
     include("pied.php");
 ?>
+
+<script>
+    function setPrix() {
+        var article = document.querySelector("#id_article");
+        var quantite = document.querySelector("#quantite");
+        var prix = document.querySelector("#prix");
+
+        var prixUnitaire = article.options[article.selectedIndex].getAttribute("data-prix");
+
+        prix.value = Number(quantite.value) * Number(prixUnitaire);
+    }
+</script>
