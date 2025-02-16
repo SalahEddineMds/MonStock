@@ -107,10 +107,26 @@
 
 <script>
     function annuleCommande(idCommande, idArticle, quantite) {
-        if (confirm("Voulez-vous vraiment annuler cette commande?")) {
-            window.location.href = "../model/annuleCommande.php?idCommande="+idCommande+"&idArticle="+idArticle+"&quantite="+quantite
-        }
+    // Get quantité en stock
+    var articleElement = document.querySelector("#id_article option[value='" + idArticle + "']");
+    if (!articleElement) {
+        alert("Erreur: Article introuvable.");
+        return;
     }
+    
+    var stockDisponible = parseInt(articleElement.textContent.match(/- (\d+) disponible/)[1], 10);
+
+    // Check si quantité de la commade superieur au quantité en stock
+    if (quantite > stockDisponible) {
+        alert("Erreur: La quantité disponible est insuffisante pour annuler cette commande.");
+        return;
+    }
+
+    if (confirm("Voulez-vous vraiment annuler cette commande?")) {
+        window.location.href = `../model/annuleCommande.php?idCommande=${idCommande}&idArticle=${idArticle}&quantite=${quantite}`;
+    }
+}
+
 
     function setPrix() {
         var article = document.querySelector("#id_article");
