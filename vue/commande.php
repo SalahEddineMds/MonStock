@@ -82,7 +82,7 @@
                         <td><?=$value["nom_article"]?></td>
                         <td><?=$value["nom"]. " ".$value["prenom"] ?></td>
                         <td><?=$value["quantite"]?></td>
-                        <td><?=$value["prix"]?></td>
+                        <td><?=number_format($value["prix"])?></td>
                         <td><?=date("d/m/Y H:i:s", strtotime($value["date_commande"]))?></td>
                         <td>
                             <a href="recuCommande.php?id=<?= $value["id"]?>"><i class='bx bx-receipt'></i></a>

@@ -113,4 +113,40 @@ function getCommande($id=null) {
     }
 }
 
+function getAllCommande() {
+    $sql = "SELECT COUNT(*) AS nbre FROM commande WHERE etat=?";
+    $req = $GLOBALS["connexion"]->prepare($sql);
+
+        $req->execute(array(1));
+
+        return $req->fetch();
+}
+
+function getAllVente() {
+    $sql = "SELECT COUNT(*) AS nbre FROM vente WHERE etat=?";
+    $req = $GLOBALS["connexion"]->prepare($sql);
+
+        $req->execute(array(1));
+
+        return $req->fetch();
+}
+
+function getAllArticle() {
+    $sql = "SELECT COUNT(*) AS nbre FROM article";
+    $req = $GLOBALS["connexion"]->prepare($sql);
+
+        $req->execute();
+
+        return $req->fetch();
+}
+
+function getCA() {
+    $sql = "SELECT SUM(prix) AS prix FROM vente";
+    $req = $GLOBALS["connexion"]->prepare($sql);
+
+        $req->execute();
+
+        return $req->fetch();
+}
+
 ?>

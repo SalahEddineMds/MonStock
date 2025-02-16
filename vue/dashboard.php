@@ -7,7 +7,7 @@
           <div class="box">
             <div class="right-side">
               <div class="box-topic">Commande</div>
-              <div class="number">40,876</div>
+              <div class="number"> <?php echo getAllCommande()["nbre"] ?> </div>
               <div class="indicator">
                 <i class="bx bx-up-arrow-alt"></i>
                 <span class="text">Depuis hier</span>
@@ -18,7 +18,7 @@
           <div class="box">
             <div class="right-side">
               <div class="box-topic">Vente</div>
-              <div class="number">38,876</div>
+              <div class="number"><?php echo getAllVente()["nbre"] ?></div>
               <div class="indicator">
                 <i class="bx bx-up-arrow-alt"></i>
                 <span class="text">Depuis hier</span>
@@ -28,8 +28,8 @@
           </div>
           <div class="box">
             <div class="right-side">
-              <div class="box-topic">Profit</div>
-              <div class="number">12,876 F</div>
+              <div class="box-topic">Article</div>
+              <div class="number"><?php echo getAllArticle()["nbre"] ?></div>
               <div class="indicator">
                 <i class="bx bx-up-arrow-alt"></i>
                 <span class="text">Depuis hier</span>
@@ -39,8 +39,8 @@
           </div>
           <div class="box">
             <div class="right-side">
-              <div class="box-topic">Revenu</div>
-              <div class="number">11,086</div>
+              <div class="box-topic">Chiffre d'affaire</div>
+              <div class="number"><?php echo number_format(getCA()["prix"]) ?></div>
               <div class="indicator">
                 <i class="bx bx-down-arrow-alt down"></i>
                 <span class="text">Aujourd'hui</span>
