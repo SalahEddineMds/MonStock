@@ -107,7 +107,7 @@
 
 <script>
     function annuleCommande(idCommande, idArticle, quantite) {
-        if (confirm("Voulez-vous vraiment annuler cette vente?")) {
+        if (confirm("Voulez-vous vraiment annuler cette commande?")) {
             window.location.href = "../model/annuleCommande.php?idCommande="+idCommande+"&idArticle="+idArticle+"&quantite="+quantite
         }
     }
