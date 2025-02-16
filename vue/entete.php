@@ -53,7 +53,7 @@
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="commande.php">
             <i class="bx bx-list-ul"></i>
             <span class="links_name">Commandes</span>
           </a>
