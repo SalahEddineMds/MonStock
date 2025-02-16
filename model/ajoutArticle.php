@@ -2,7 +2,6 @@
     include("connexionbd.php");
     if (!empty($_POST["nom_article"])
         && !empty($_POST["categorie"])
-        && !empty($_POST["quantite"])
         && !empty($_POST["prix_unitaire"])
         && !empty($_POST["date_fabrication"])
         && !empty($_POST["date_expiration"])) {
