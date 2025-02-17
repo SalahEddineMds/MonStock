@@ -149,4 +149,31 @@ function getCA() {
         return $req->fetch();
 }
 
+function getLastVente($id=null) {
+
+        $sql = "SELECT v.id, nom_article, nom, prenom, v.quantite, prix, date_vente, a.id AS idArticle
+                FROM client AS c, vente AS v, article AS a WHERE v.id_article=a.id AND v.id_client=c.id AND etat=?
+                ORDER BY date_vente DESC LIMIT 10"; //Sorts sales by most recent first (LIMIT 10 Retrieves only the 10 latest sales)
+
+        $req = $GLOBALS["connexion"]->prepare($sql);
+
+        $req->execute(array(1));
+
+        return $req->fetchAll();
+}
+
+function getMostVente($id=null) {
+
+    $sql = "SELECT nom_article, SUM(prix) AS prix
+            FROM client AS c, vente AS v, article AS a WHERE v.id_article=a.id AND v.id_client=c.id AND etat=?
+            GROUP BY a.id
+            ORDER BY SUM(prix) DESC LIMIT 10";
+
+    $req = $GLOBALS["connexion"]->prepare($sql);
+
+    $req->execute(array(1));
+
+    return $req->fetchAll();
+}
+
 ?>
