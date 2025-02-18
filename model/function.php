@@ -176,4 +176,26 @@ function getMostVente($id=null) {
     return $req->fetchAll();
 }
 
+function getCategorie($id=null) {
+    if (!empty($id)) {
+        $sql = "SELECT * FROM categorie_article WHERE id=?";
+
+        $req = $GLOBALS["connexion"]->prepare($sql);
+
+        $req->execute(array($id));
+
+        return $req->fetch();
+
+    } else {
+        $sql = "SELECT * FROM categorie_article";
+
+        $req = $GLOBALS["connexion"]->prepare($sql);
+
+        $req->execute();
+
+        return $req->fetchAll();
+    }
+    
+}
+
 ?>
