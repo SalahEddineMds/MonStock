@@ -59,6 +59,52 @@
             </form>
         </div>
         <div class="box">
+            <form action="" method="get">
+            <table class="mtable">
+                <tr>
+                    <th>Nom article</th>
+                    <th>Catégorie</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire</th>
+                    <th>Date fabrication</th>
+                    <th>Date expiration</th>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" name="nom_article" id="nom_article" placeholder="Veuillez saisir le nom">
+                    </td>
+                    <td>
+                        <select name="id_categorie" id="id_categorie">
+                            <?php 
+                            $categories = getCategorie();
+                            if (!empty($categories) && is_array($categories)) {
+                                foreach($categories as $key => $value){
+
+                            ?>
+                                <option <?= !empty($_GET["id"]) && $article["id_categorie"]== $value['id'] ? "selected" : "" ?> value="<?= $value["id"] ?>"><?= $value['libelle_categorie'] ?></option>                
+                            
+                            <?php 
+
+                                }
+                            }
+                            ?>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="0">
+                    </td>
+                    <td>
+                        <input type="number" name="prix_unitaire" id="prix_unitaire" placeholder="Veuillez saisir le prix" min="0" step="any">
+                    </td>
+                    <td>
+                        <input type="datetime-local" name="date_fabrication" id="date_fabrication">
+                    </td>
+                    <td>
+                        <input type="datetime-local" name="date_expiration" id="date_expiration">
+                    </td>
+                </tr>
+            </table>
+            </form>
             <table class="mtable">
                 <tr>
                     <th>Nom article</th>
