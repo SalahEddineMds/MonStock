@@ -1,7 +1,7 @@
 <?php
 
 include("connexionbd.php");
-function getArticle($id=null) {
+function getArticle($id=null, $DONNErecherche = array()) {
     if (!empty($id)) {
         $sql = "SELECT nom_article, libelle_categorie, quantite, prix_unitaire, date_fabrication,
         date_expiration, id_categorie, a.id FROM article AS a, categorie_article AS c
@@ -13,6 +13,25 @@ function getArticle($id=null) {
 
         return $req->fetch();
 
+    } elseif (!empty($DONNErecherche)) {
+        $recherche = "";
+        extract($DONNErecherche);
+        if (!empty($nom_article)) $recherche .= "AND a.nom_article LIKE '%$nom_article%' ";
+        if (!empty($id_categorie)) $recherche .= " AND a.id_categorie = $id_categorie ";
+        if (!empty($quantite)) $recherche .= " AND a.quantite = $quantite ";
+        if (!empty($prix_unitaire)) $recherche .= " AND a.prix_unitaire = $prix_unitaire ";
+        if (!empty($date_fabrication)) $recherche .= " AND DATE(a.date_fabrication) = '$date_fabrication' ";
+        if (!empty($date_expiration)) $recherche .= " AND DATE(a.date_expiration) = '$date_expiration' ";
+
+        $sql = "SELECT nom_article, libelle_categorie, quantite, prix_unitaire, date_fabrication,
+        date_expiration, id_categorie, a.id FROM article AS a, categorie_article AS c
+        WHERE a.id_categorie = c.id $recherche";
+
+        $req = $GLOBALS["connexion"]->prepare($sql);
+
+        $req->execute();
+
+        return $req->fetchAll();
     } else {
         $sql = "SELECT nom_article, libelle_categorie, quantite, prix_unitaire, date_fabrication,
         date_expiration, id_categorie, a.id FROM article AS a, categorie_article AS c
