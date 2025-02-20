@@ -80,12 +80,12 @@
             ?>
           </span>
         </div>
-        <div class="search-box">
+       <!-- <div class="search-box">
           <input type="text" placeholder="Recherche..." />
           <i class="bx bx-search"></i>
         </div>
         <div class="profile-details">
           <span class="admin_name">Komche</span>
           <i class="bx bx-chevron-down"></i>
-        </div>
+        </div> -->
       </nav>
