@@ -68,36 +68,6 @@
             <span class="links_name">Catégorie</span>
           </a>
         </li>
-        <li>
-          <a href="#">
-            <i class="bx bx-coin-stack"></i>
-            <span class="links_name">Stock</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="bx bx-book-alt"></i>
-            <span class="links_name">Tout les commmandes</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="bx bx-user"></i>
-            <span class="links_name">Utilisateur</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="bx bx-cog"></i>
-            <span class="links_name">Configuration</span>
-          </a>
-        </li>
-        <li class="log_out">
-          <a href="#">
-            <i class="bx bx-log-out"></i>
-            <span class="links_name">Déconnexion</span>
-          </a>
-        </li>
       </ul>
     </div>
     <section class="home-section">
