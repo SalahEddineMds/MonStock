@@ -57,7 +57,10 @@
                         <td><?=$value["prenom"]?></td>
                         <td><?=$value["telephone"]?></td>
                         <td><?=$value["adresse"]?></td>
-                        <td><a href="?id=<?=$value["id"]?>"><i class='bx bx-edit-alt'></i></a></td>
+                        <td>
+                            <a href="?id=<?=$value["id"]?>"><i class='bx bx-edit-alt'></i></a>
+                            <a onclick="supprimeFournisseur(<?= $value['id']?>)" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
+                        </td>
                     </tr>    
                 <?php
                     }
@@ -73,3 +76,12 @@
 <?php 
     include("pied.php");
 ?>
+
+<script>
+    function supprimeFournisseur(idFournisseur) {
+
+    if (confirm("Voulez-vous vraiment supprimer ce fournisseur?")) {
+        window.location.href = `../model/supprimeFournisseur.php?idFournisseur=${idFournisseur}`;
+    }
+}
+</script>

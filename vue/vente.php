@@ -85,8 +85,8 @@
                         <td><?= number_format($value["prix"])?></td>
                         <td><?=date("d/m/Y H:i:s", strtotime($value["date_vente"]))?></td>
                         <td>
-                            <a href="recuVente.php?id=<?= $value["id"]?>"><i class='bx bx-receipt'></i></a>
-                            <a onclick="annuleVente(<?= $value["id"]?>,<?= $value["idArticle"]?>,<?= $value["quantite"]?>)" style="color: red"><i class='bx bx-x-circle'></i></a>
+                            <a href="recuVente.php?id=<?= $value["id"]?>" style="color: blue !important;"><i class='bx bx-receipt'></i></a>
+                            <a onclick="annuleVente(<?= $value['id']?>,<?= $value['idArticle']?>,<?= $value['quantite']?>)" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
                         </td>
 
                     </tr>    

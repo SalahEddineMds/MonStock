@@ -86,7 +86,7 @@
                         <td><?=date("d/m/Y H:i:s", strtotime($value["date_commande"]))?></td>
                         <td>
                             <a href="recuCommande.php?id=<?= $value["id"]?>"><i class='bx bx-receipt'></i></a>
-                            <a onclick="annuleCommande(<?= $value["id"]?>,<?= $value["idArticle"]?>,<?= $value["quantite"]?>)" style="color: red"><i class='bx bx-x-circle'></i></a>
+                            <a onclick="annuleCommande(<?= $value['id']?>,<?= $value['idArticle']?>,<?= $value['quantite']?>) "style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
                         </td>
 
                     </tr>    
