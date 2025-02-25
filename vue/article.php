@@ -138,7 +138,7 @@
                         <td><?=number_format($value["prix_unitaire"])?></td>
                         <td><?=date("d/m/Y H:i:s",strtotime($value["date_fabrication"]))?></td>
                         <td><?=date("d/m/Y H:i:s",strtotime($value["date_expiration"]))?></td>
-                        <td><a href="?id=<?=$value["id"]?>"><i class='bx bx-edit-alt'></i></a></td>
+                        <td><a href="?id=<?=$value["id"]?>" style="color: blue !important;"><i class='bx bx-edit-alt'></i></a></td>
                     </tr>    
                 <?php
                     }

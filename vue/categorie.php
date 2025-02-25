@@ -43,7 +43,7 @@
                     <tr>
                         <td><?=$value["libelle_categorie"]?></td>
                         <td>
-                            <a href="?id=<?=$value["id"]?>"><i class='bx bx-edit-alt'></i></a>
+                            <a href="?id=<?=$value["id"]?>" style="color: blue !important;"><i class='bx bx-edit-alt'></i></a>
                             <a onclick="supprimeCategorie(<?= $value['id']?>)" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
                         </td>
                     </tr>    
