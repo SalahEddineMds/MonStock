@@ -46,7 +46,7 @@ function getArticle($id=null, $DONNErecherche = array()) {
     
 }
 
-function getClient($id=null) {
+function getClient($id=null, $DONNErecherche = array()) {
     if (!empty($id)) {
         $sql = "SELECT * FROM client WHERE id=? AND etat=?";
 
@@ -56,6 +56,21 @@ function getClient($id=null) {
 
         return $req->fetch();
 
+    } elseif(!empty($DONNErecherche)) {
+        $recherche= "";
+        extract($DONNErecherche);
+        if (!empty($nom)) $recherche .= "AND nom LIKE '%$nom%' ";
+        if (!empty($prenom)) $recherche .= "AND prenom LIKE '%$prenom%' ";
+        if (!empty($telephone)) $recherche .= "AND telephone LIKE '%$telephone%' ";
+        if (!empty($adresse)) $recherche .= "AND adresse LIKE '%$adresse%' ";
+
+        $sql = "SELECT * FROM client WHERE 1=1 $recherche";
+
+        $req = $GLOBALS["connexion"]->prepare($sql);
+
+        $req->execute();
+
+        return $req->fetchAll();
     } else {
         $sql = "SELECT * FROM client WHERE etat=?";
 
@@ -91,7 +106,7 @@ function getVente($id=null) {
     }
 }
 
-function getFournisseur($id=null) {
+function getFournisseur($id=null, $DONNErecherche = array()) {
     if (!empty($id)) {
         $sql = "SELECT * FROM fournisseur WHERE id=? AND etat=?";
 
@@ -100,6 +115,22 @@ function getFournisseur($id=null) {
         $req->execute(array($id,1));
 
         return $req->fetch();
+
+    } elseif(!empty($DONNErecherche)) {
+        $recherche= "";
+        extract($DONNErecherche);
+        if (!empty($nom)) $recherche .= "AND nom LIKE '%$nom%' ";
+        if (!empty($prenom)) $recherche .= "AND prenom LIKE '%$prenom%' ";
+        if (!empty($telephone)) $recherche .= "AND telephone LIKE '%$telephone%' ";
+        if (!empty($adresse)) $recherche .= "AND adresse LIKE '%$adresse%' ";
+
+        $sql = "SELECT * FROM fournisseur WHERE 1=1 $recherche";
+
+        $req = $GLOBALS["connexion"]->prepare($sql);
+
+        $req->execute();
+
+        return $req->fetchAll(); 
 
     } else {
         $sql = "SELECT * FROM fournisseur WHERE etat=?";

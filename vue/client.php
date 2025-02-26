@@ -38,7 +38,34 @@
 
             </form>
         </div>
-        <div class="box">
+        <div style="display: block;" class="box">
+            <form action="" method="get">
+                <table class="mtable">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>N° Téléphone</th>
+                        <th>Adresse</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" name="nom" id="nom" placeholder="Veuillez saisir le nom">
+                        </td>
+                        <td>
+                            <input type="text" name="prenom" id="prenom" placeholder="Veuillez saisir le prénom">
+                        </td>
+                        <td>
+                            <input type="text" name="telephone" id="telephone" placeholder="Veuillez saisir le N° Téléphone">
+                        </td>
+                        <td>
+                            <input type="text" name="adresse" id="adresse" placeholder="Veuillez saisir l'Adresse">
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <button type="submit">Valider</button>
+            </form>
+            <br>
             <table class="mtable">
                 <tr>
                     <th>Nom</th>
@@ -48,9 +75,14 @@
                     <th>Action</th>
                 </tr>
                 <?php
-                $clients = getClient();
-                if (!empty($clients) && is_array( $clients )) {
-                    foreach ($clients as $key => $value) {
+                    if (!empty($_GET)) {
+                        $clients = getClient(null, $_GET);
+                    } else {
+                        $clients = getClient();
+                    }
+
+                    if (!empty($clients) && is_array( $clients )) {
+                        foreach ($clients as $key => $value) {
                     ?>
                     <tr>
                         <td><?=$value["nom"]?></td>
@@ -58,7 +90,7 @@
                         <td><?=$value["telephone"]?></td>
                         <td><?=$value["adresse"]?></td>
                         <td>
-                            <a href="?id=<?=$value["id"]?>" style="color: blue !important;"><i class='bx bx-edit-alt'></i></a>
+                            <a href="?id=<?=$value['id']?>" style="color: blue !important;"><i class='bx bx-edit-alt'></i></a>
                             <a onclick="supprimeClient(<?= $value['id']?>)" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
                         </td>
                     </tr>    
