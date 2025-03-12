@@ -185,7 +185,7 @@ nav .profile-details i {
   margin-bottom: 26px;
 }
 .overview-boxes .box {
-  display: flex;
+  display: inline-block;
   align-items: center;
   justify-content: center;
   min-width: calc(100% / 4 - 15px);
@@ -468,6 +468,16 @@ button {
   border-radius: 5px;
 }
 
+.valider{
+  background-color: rgb(6,183,233);
+  color: white;
+  width: 165px;
+  height: 30px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
 label {
   display: block;
 }
@@ -587,3 +597,4 @@ ol.mtable li:nth-child(even) {
   }
 }
 /* source http://jsfiddle.net/mturjak/2wk6Q/1949/ */
+

@@ -10,31 +10,33 @@
     <div class="overview-boxes">
         <div class="box">
             <form action=" <?= !empty($_GET["id"]) ? "../model/modifCommande.php" : "../model/ajoutCommande.php" ?>" method="post">
-                <input value="<?= !empty($_GET["id"]) ? $article["id"] : "" ?>" type="hidden" name="id" id="id">
+                <label for="id_fournisseur">Fournisseur</label>
+                    <select name="id_fournisseur" id="id_fournisseur">
+                        <?php 
+                             $fournisseurs = getFournisseur();
+                            if (!empty($fournisseurs) && is_array($fournisseurs)) {
+                                foreach ($fournisseurs as $key => $value) {
+                                    ?>
+                                    <option value="<?= $value["id"] ?>"><?= $value["nom"]. " ". $value["prenom"]?></option>
+                                    <?php
 
+                                }
+                            }
+                        ?>  
+                    </select>
+                    <button class="valider" type="submit">Valider Commande</button>
+            </form>
+        <div class="box">
+            <form action="../model/ajoutArticleCommande.php" method="post" id="article-form">
+                <input value="<?= !empty($_GET["id"]) ? $article["id"] : "" ?>" type="hidden" name="id" id="id">
                 <label for="id_article">Article</label>
                 <select onchange="setPrix()" name="id_article" id="id_article">
                     <?php 
-                         $articles = getArticle();
+                        $articles = getArticle();
                         if (!empty($articles) && is_array($articles)) {
                             foreach ($articles as $key => $value) {
                                 ?>
                                 <option data-prix="<?= $value["prix_unitaire"] ?>" value="<?= $value["id"] ?>"><?= $value["nom_article"]. " - ". $value["quantite"]. " disponible" ?></option>
-                                <?php
-
-                            }
-                        }
-                    ?>  
-                </select>
-
-                <label for="id_fournisseur">Fournisseur</label>
-                <select name="id_fournisseur" id="id_fournisseur">
-                    <?php 
-                         $fournisseurs = getFournisseur();
-                        if (!empty($fournisseurs) && is_array($fournisseurs)) {
-                            foreach ($fournisseurs as $key => $value) {
-                                ?>
-                                <option value="<?= $value["id"] ?>"><?= $value["nom"]. " ". $value["prenom"]?></option>
                                 <?php
 
                             }
@@ -49,7 +51,7 @@
                 <input value="<?= !empty($_GET["id"]) ? $article["prix"] : "" ?>" type="number" name="prix" id="prix" placeholder="Veuillez saisir le prix" min="0" step="any">
 
                 <button type="submit">Valider</button>
-                
+
                 <?php
                 if (!empty($_SESSION["message"]["text"])) {
                 ?>
@@ -60,16 +62,14 @@
                 unset($_SESSION["message"]); // Efface le message après affichage
                 }
                 ?>
-
-            </form>
-        </div>
+            </form>    
+        </div>                  
+    </div>
         <div class="box">
             <table class="mtable">
                 <tr>
-                    <th>Article</th>
                     <th>Fournisseur</th>
-                    <th>Quantité</th>
-                    <th>Prix</th>
+                    <th>Montant</th>
                     <th>Date</th>
                     <th>Action</th>
                 </tr>
@@ -79,9 +79,7 @@
                     foreach ($commandes as $key => $value) {
                     ?>
                     <tr>
-                        <td><?=$value["nom_article"]?></td>
                         <td><?=$value["nom"]. " ".$value["prenom"] ?></td>
-                        <td><?=$value["quantite"]?></td>
                         <td><?=number_format($value["prix"])?></td>
                         <td><?=date("d/m/Y H:i:s", strtotime($value["date_commande"]))?></td>
                         <td>
