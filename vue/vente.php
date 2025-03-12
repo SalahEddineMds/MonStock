@@ -10,7 +10,24 @@
     <div class="overview-boxes">
         <div class="box">
             <form action=" <?= !empty($_GET["id"]) ? "../model/modifVente.php" : "../model/ajoutVente.php" ?>" method="post">
-                <input value="<?= !empty($_GET["id"]) ? $article["id"] : "" ?>" type="hidden" name="id" id="id">
+            <label for="id_client">Client</label>
+                <select name="id_client" id="id_client">
+                    <?php 
+                         $clients = getClient();
+                        if (!empty($clients) && is_array($clients)) {
+                            foreach ($clients as $key => $value) {
+                                ?>
+                                <option value="<?= $value["id"] ?>"><?= $value["nom"]. " ". $value["prenom"]?></option>
+                                <?php
+
+                            }
+                        }
+                    ?>  
+                </select>
+            <div class="box">
+                <form action="" method="post">
+
+                    <input value="<?= !empty($_GET["id"]) ? $article["id"] : "" ?>" type="hidden" name="id" id="id">
 
                 <label for="id_article">Article</label>
                 <select onchange="setPrix()" name="id_article" id="id_article">
@@ -27,29 +44,19 @@
                     ?>  
                 </select>
 
-                <label for="id_client">Client</label>
-                <select name="id_client" id="id_client">
-                    <?php 
-                         $clients = getClient();
-                        if (!empty($clients) && is_array($clients)) {
-                            foreach ($clients as $key => $value) {
-                                ?>
-                                <option value="<?= $value["id"] ?>"><?= $value["nom"]. " ". $value["prenom"]?></option>
-                                <?php
-
-                            }
-                        }
-                    ?>  
-                </select>
-
                 <label for="quantite">Quantité</label>
                 <input onkeyup="setPrix()" value="<?= !empty($_GET["id"]) ? $article["quantite"] : "" ?>" type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="0">
 
                 <label for="prix">Prix</label>
                 <input value="<?= !empty($_GET["id"]) ? $article["prix"] : "" ?>" type="number" name="prix" id="prix" placeholder="Veuillez saisir le prix" min="0" step="any">
 
-                <button type="submit">Valider</button>
-                
+                <button type="submit">Ajouter</button>
+
+                    
+                </form>
+            </div>
+
+              
                 <?php
                 if (!empty($_SESSION["message"]["text"])) {
                 ?>
@@ -60,7 +67,7 @@
                 unset($_SESSION["message"]); // Efface le message après affichage
                 }
                 ?>
-
+                <button type="submit">Valider</button>
             </form>
         </div>
         <div class="box">
