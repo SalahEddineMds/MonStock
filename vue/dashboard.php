@@ -40,7 +40,7 @@
           <div class="box">
             <div class="right-side">
               <div class="box-topic">Chiffre d'affaire</div>
-              <div class="number"><?php echo number_format(getCA()["prix"]). " DZD" ?></div>
+              <div class="number"><?php echo number_format(getCA()["total"]). " DZD" ?></div>
               <div class="indicator">
                 <i class="bx bx-down-arrow-alt down"></i>
                 <span class="text">Aujourd'hui</span>
@@ -78,21 +78,11 @@
                 ?>
               </ul>
               <ul class="details">
-                <li class="topic">Article</li>
+                <li class="topic">Total</li>
                 <?php
                   foreach ($ventes as $key => $value) {
                     ?>
-                      <li><a href="#"><?php echo $value["nom_article"]?></a></li>
-                    <?php
-                  }
-                ?>
-              </ul>
-              <ul class="details">
-                <li class="topic">Prix</li>
-                <?php
-                  foreach ($ventes as $key => $value) {
-                    ?>
-                      <li><a href="#"><?php echo number_format($value["prix"])." DZD"?></a></li>
+                      <li><a href="#"><?php echo number_format($value["total"])." DZD"?></a></li>
                     <?php
                   }
                 ?>
