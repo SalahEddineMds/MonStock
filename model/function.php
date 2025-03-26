@@ -85,8 +85,8 @@ function getClient($id=null, $DONNErecherche = array()) {
 
 function getVente($id=null) {
     if (!empty($id)) {
-        $sql = "SELECT v.id, nom_article, nom, prenom, v.quantite, prix, date_vente, prix_unitaire, adresse, telephone
-         FROM client AS c, vente AS v, article AS a WHERE v.id_article=a.id AND v.id_client=c.id AND v.id=? AND v.etat=?";
+        $sql = "SELECT v.id, nom, prenom, total, date_vente, adresse, telephone
+         FROM client AS c, vente AS v WHERE v.id_client=c.id AND v.id=? AND v.etat=?";
 
         $req = $GLOBALS["connexion"]->prepare($sql);
 
@@ -95,8 +95,8 @@ function getVente($id=null) {
         return $req->fetch();
 
     } else {
-        $sql = "SELECT v.id, nom_article, nom, prenom, v.quantite, prix, date_vente, a.id AS idArticle
-                FROM client AS c, vente AS v, article AS a WHERE v.id_article=a.id AND v.id_client=c.id AND v.etat=?";
+        $sql = "SELECT v.id, nom, prenom, total, date_vente
+                FROM client AS c, vente AS v WHERE v.id_client=c.id AND v.etat=?";
 
         $req = $GLOBALS["connexion"]->prepare($sql);
 
@@ -195,7 +195,7 @@ function getAllArticle() {
 }
 
 function getCA() {
-    $sql = "SELECT SUM(prix) AS prix FROM vente";
+    $sql = "SELECT SUM(total) AS total FROM vente";
     $req = $GLOBALS["connexion"]->prepare($sql);
 
         $req->execute();
@@ -203,32 +203,38 @@ function getCA() {
         return $req->fetch();
 }
 
-function getLastVente($id=null) {
-
-        $sql = "SELECT v.id, nom_article, nom, prenom, v.quantite, prix, date_vente, a.id AS idArticle
-                FROM client AS c, vente AS v, article AS a WHERE v.id_article=a.id AND v.id_client=c.id AND v.etat=?
-                ORDER BY date_vente DESC LIMIT 10"; //Sorts sales by most recent first (LIMIT 10 Retrieves only the 10 latest sales)
-
-        $req = $GLOBALS["connexion"]->prepare($sql);
-
-        $req->execute(array(1));
-
-        return $req->fetchAll();
-}
-
-function getMostVente($id=null) {
-
-    $sql = "SELECT nom_article, SUM(prix) AS prix
-            FROM client AS c, vente AS v, article AS a WHERE v.id_article=a.id AND v.id_client=c.id AND v.etat=?
-            GROUP BY a.id
-            ORDER BY SUM(prix) DESC LIMIT 10";
+function getLastVente($id = null) {
+    $sql = "SELECT v.id, c.nom, c.prenom, v.total, v.date_vente
+            FROM vente v
+            JOIN client c ON v.id_client = c.id
+            WHERE v.etat = ?
+            ORDER BY v.date_vente DESC
+            LIMIT 10"; 
 
     $req = $GLOBALS["connexion"]->prepare($sql);
-
-    $req->execute(array(1));
+    $req->execute([1]);
 
     return $req->fetchAll();
 }
+
+
+
+function getMostVente($id=null) {
+    $sql = "SELECT a.nom_article, SUM(vl.prix) AS prix
+            FROM vente v
+            JOIN vente_ligne vl ON v.id = vl.id_vente
+            JOIN article a ON vl.id_article = a.id
+            WHERE v.etat = ?
+            GROUP BY a.id, a.nom_article
+            ORDER BY prix DESC
+            LIMIT 10";
+
+    $req = $GLOBALS["connexion"]->prepare($sql);
+    $req->execute([1]);
+
+    return $req->fetchAll();
+}
+
 
 function getCategorie($id=null) {
     if (!empty($id)) {

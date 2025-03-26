@@ -478,6 +478,17 @@ button {
   border-radius: 5px;
 }
 
+.nouveau{
+  background-color: rgb(6, 233, 82);
+  color: white;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+
 label {
   display: block;
 }
