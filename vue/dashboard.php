@@ -6,8 +6,8 @@
         <div class="overview-boxes">
           <div class="box">
             <div class="right-side">
-              <div class="box-topic">Commande</div>
-              <div class="number"> <?php echo getAllCommande()["nbre"] ?> </div>
+              <div class="box-topic">Achat</div>
+              <div class="number"> <?php echo getAllAchat()["nbre"] ?> </div>
               <div class="indicator">
                 <i class="bx bx-up-arrow-alt"></i>
                 <span class="text">Depuis hier</span>

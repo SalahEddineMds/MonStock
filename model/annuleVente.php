@@ -5,7 +5,7 @@ if (!empty($_GET["idVente"])) {
     $idVente = $_GET["idVente"];
 
     // Set etat=0
-    $sql = "UPDATE vente SET etat = 0 WHERE id = ?";
+    $sql = "UPDATE vente SET etat = '0' WHERE id = ?";
     $req = $connexion->prepare($sql);
     $req->execute([$idVente]);
 

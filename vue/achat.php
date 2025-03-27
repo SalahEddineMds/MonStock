@@ -2,14 +2,14 @@
     include("entete.php");
 
     if (!empty($_GET["id"])) {
-        $article = getCommande($_GET["id"]);
+        $article = getAchat($_GET["id"]);
     }
 ?>
 
 <div class="home-content">
     <div class="overview-boxes">
         <div class="box">
-            <form action=" <?= !empty($_GET["id"]) ? "../model/modifCommande.php" : "../model/ajoutCommande.php" ?>" method="post">
+            <form action=" <?= !empty($_GET["id"]) ? "../model/modifAchat.php" : "../model/ajoutAchat.php" ?>" method="post">
                 <label for="id_fournisseur">Fournisseur</label>
                     <select name="id_fournisseur" id="id_fournisseur">
                         <?php 
@@ -24,10 +24,10 @@
                             }
                         ?>  
                     </select>
-                    <button class="valider" type="submit">Valider Commande</button>
+                    <button class="valider" type="submit">Valider Achat</button>
             </form>
         <div class="box">
-            <form action="../model/ajoutArticleCommande.php" method="post" id="article-form">
+            <form action="../model/ajoutArticleAchat.php" method="post" id="article-form">
                 <input value="<?= !empty($_GET["id"]) ? $article["id"] : "" ?>" type="hidden" name="id" id="id">
                 <label for="id_article">Article</label>
                 <select onchange="setPrix()" name="id_article" id="id_article">
@@ -74,17 +74,17 @@
                     <th>Action</th>
                 </tr>
                 <?php
-                $commandes = getCommande();
-                if (!empty($commandes) && is_array( $commandes )) {
-                    foreach ($commandes as $key => $value) {
+                $achats = getAchat();
+                if (!empty($achats) && is_array( $achats )) {
+                    foreach ($achats as $key => $value) {
                     ?>
                     <tr>
                         <td><?=$value["nom"]. " ".$value["prenom"] ?></td>
                         <td><?=number_format($value["prix"])?></td>
-                        <td><?=date("d/m/Y H:i:s", strtotime($value["date_commande"]))?></td>
+                        <td><?=date("d/m/Y H:i:s", strtotime($value["date_achat"]))?></td>
                         <td>
-                            <a href="recuCommande.php?id=<?= $value["id"]?>" style="color: blue !important;"><i class='bx bx-receipt'></i></a>
-                            <a onclick="annuleCommande(<?= $value['id']?>,<?= $value['idArticle']?>,<?= $value['quantite']?>) "style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
+                            <a href="recuAchat.php?id=<?= $value["id"]?>" style="color: blue !important;"><i class='bx bx-receipt'></i></a>
+                            <a onclick="annuleAchat(<?= $value['id']?>,<?= $value['idArticle']?>,<?= $value['quantite']?>) "style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
                         </td>
 
                     </tr>    
@@ -104,7 +104,7 @@
 ?>
 
 <script>
-    function annuleCommande(idCommande, idArticle, quantite) {
+    function annuleAchat(idAchat, idArticle, quantite) {
     // Get quantité en stock
     var articleElement = document.querySelector("#id_article option[value='" + idArticle + "']");
     if (!articleElement) {
@@ -116,12 +116,12 @@
 
     // Check si quantité de la commade superieur au quantité en stock
     if (quantite > stockDisponible) {
-        alert("Erreur: La quantité disponible est insuffisante pour annuler cette commande.");
+        alert("Erreur: La quantité disponible est insuffisante pour annuler cette achat.");
         return;
     }
 
-    if (confirm("Voulez-vous vraiment annuler cette commande?")) {
-        window.location.href = `../model/annuleCommande.php?idCommande=${idCommande}&idArticle=${idArticle}&quantite=${quantite}`;
+    if (confirm("Voulez-vous vraiment annuler cette achat?")) {
+        window.location.href = `../model/annuleAchat.php?idAchat=${idAchat}&idArticle=${idArticle}&quantite=${quantite}`;
     }
 }
 

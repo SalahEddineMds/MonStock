@@ -9,7 +9,7 @@
 
 
                 
-                $sql = "INSERT INTO commande(id_article, id_fournisseur, quantite, prix)
+                $sql = "INSERT INTO achat(id_article, id_fournisseur, quantite, prix)
                 VALUES(?, ?, ?, ?)";
                 $req = $connexion->prepare($sql);
 
@@ -29,15 +29,15 @@
                         $_POST["id_article"]));
 
                         if ($req->rowCount()!=0) {
-                            $_SESSION["message"]["text"] = "Commande effectuéé avec succès";
+                            $_SESSION["message"]["text"] = "achat effectuéé avec succès";
                             $_SESSION["message"]["type"] = "success";
                         } else {
-                            $_SESSION["message"]["text"] = "Impossible de faire cette commande";
+                            $_SESSION["message"]["text"] = "Impossible de faire cette achat";
                             $_SESSION["message"]["type"] = "danger";
                         }
                                         
                 } else {
-                    $_SESSION["message"]["text"] = "Une erreur s'est produite lors de la commande";
+                    $_SESSION["message"]["text"] = "Une erreur s'est produite lors de la achat";
                     $_SESSION["message"]["type"] = "danger";
                 }
 
@@ -47,5 +47,5 @@
         $_SESSION["message"]["type"] = "danger";
     }
 
-    header("Location: ../vue/commande.php");
+    header("Location: ../vue/achat.php");
 ?>

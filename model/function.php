@@ -144,10 +144,10 @@ function getFournisseur($id=null, $DONNErecherche = array()) {
     
 }
 
-function getCommande($id=null) {
+function getAchat($id=null) {
     if (!empty($id)) {
-        $sql = "SELECT co.id, nom_article, nom, prenom, co.quantite, prix, date_commande, prix_unitaire, adresse, telephone
-         FROM fournisseur AS f, commande AS co, article AS a WHERE co.id_article=a.id AND co.id_fournisseur=f.id AND co.id=? AND co.etat=?";
+        $sql = "SELECT co.id, nom_article, nom, prenom, co.quantite, prix, date_achat, prix_unitaire, adresse, telephone
+         FROM fournisseur AS f, achat AS co, article AS a WHERE co.id_article=a.id AND co.id_fournisseur=f.id AND co.id=? AND co.etat=?";
 
         $req = $GLOBALS["connexion"]->prepare($sql);
 
@@ -156,8 +156,8 @@ function getCommande($id=null) {
         return $req->fetch();
 
     } else {
-        $sql = "SELECT co.id, nom_article, nom, prenom, co.quantite, prix, date_commande, a.id AS idArticle
-                FROM fournisseur AS f, commande AS co, article AS a WHERE co.id_article=a.id AND co.id_fournisseur=f.id AND co.etat=?";
+        $sql = "SELECT co.id, nom_article, nom, prenom, co.quantite, prix, date_achat, a.id AS idArticle
+                FROM fournisseur AS f, achat AS co, article AS a WHERE co.id_article=a.id AND co.id_fournisseur=f.id AND co.etat=?";
 
         $req = $GLOBALS["connexion"]->prepare($sql);
 
@@ -167,8 +167,8 @@ function getCommande($id=null) {
     }
 }
 
-function getAllCommande() {
-    $sql = "SELECT COUNT(*) AS nbre FROM commande WHERE etat=?";
+function getAllAchat() {
+    $sql = "SELECT COUNT(*) AS nbre FROM achat WHERE etat=?";
     $req = $GLOBALS["connexion"]->prepare($sql);
 
         $req->execute(array(1));

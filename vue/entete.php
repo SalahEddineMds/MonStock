@@ -57,9 +57,9 @@
           </a>
         </li>
         <li>
-          <a href="commande.php" class="<?php echo basename($_SERVER["PHP_SELF"])=="commande.php" ? "active" : "" ?>">
+          <a href="achat.php" class="<?php echo basename($_SERVER["PHP_SELF"])=="achat.php" ? "active" : "" ?>">
             <i class="bx bx-list-ul"></i>
-            <span class="links_name">Commandes</span>
+            <span class="links_name">Achat</span>
           </a>
         </li>
         <li>

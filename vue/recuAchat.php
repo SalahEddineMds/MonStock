@@ -2,7 +2,7 @@
     include("entete.php");
 
     if (!empty($_GET["id"])) {
-        $commandes = getCommande($_GET["id"]);
+        $achats = getAchat($_GET["id"]);
     }
 ?>
 
@@ -14,21 +14,21 @@
         <div class="cote-a-cote">
             <h2>MonStock stock</h2>
             <div>
-                <p>Reçu N° #: <?= $commandes["id"]?> </p>
-                <p>Date: <?= date("d/m/Y H:i:s", strtotime($commandes["date_commande"]))?> </p>
+                <p>Reçu N° #: <?= $achats["id"]?> </p>
+                <p>Date: <?= date("d/m/Y H:i:s", strtotime($achats["date_achat"]))?> </p>
             </div>
         </div>
         <div class="cote-a-cote" style="width: 50%;">
             <p>Nom: </p>
-            <p><?=$commandes["nom"]. " ".$commandes["prenom"] ?></p>
+            <p><?=$achats["nom"]. " ".$achats["prenom"] ?></p>
         </div>
         <div class="cote-a-cote" style="width: 50%;">
             <p>Téléphone: </p>
-            <p><?=$commandes["telephone"]?></p>
+            <p><?=$achats["telephone"]?></p>
         </div>
         <div class="cote-a-cote" style="width: 50%;">
             <p>Adresse: </p>
-            <p><?=$commandes["adresse"]?></p>
+            <p><?=$achats["adresse"]?></p>
         </div>
 
         <br>
@@ -41,10 +41,10 @@
                     <th>Prix total</th>
                 </tr>
                     <tr>
-                        <td><?=$commandes["nom_article"]?></td>
-                        <td><?=$commandes["quantite"]?></td>
-                        <td><?=$commandes["prix_unitaire"]?></td>
-                        <td><?=$commandes["prix"]?></td>
+                        <td><?=$achats["nom_article"]?></td>
+                        <td><?=$achats["quantite"]?></td>
+                        <td><?=$achats["prix_unitaire"]?></td>
+                        <td><?=$achats["prix"]?></td>
                     </tr>    
             </table>
     </div>
