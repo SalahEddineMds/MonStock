@@ -258,4 +258,19 @@ function getCategorie($id=null) {
     
 }
 
+function getVenteLignes($idVente) {
+    global $connexion;
+
+    $sql = "SELECT vl.*, a.nom_article AS nom_article, a.prix_unitaire
+            FROM vente_ligne vl
+            JOIN article a ON vl.id_article = a.id
+            WHERE vl.id_vente = ?";
+    
+    $req = $connexion->prepare($sql);
+    $req->execute([$idVente]);
+
+    return $req->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 ?>

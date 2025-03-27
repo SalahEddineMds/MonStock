@@ -3,6 +3,7 @@
 
     if (!empty($_GET["id"])) {
         $ventes = getVente($_GET["id"]);
+        $vente_lignes = getVenteLignes($_GET["id"]);
     }
 ?>
 
@@ -40,13 +41,19 @@
                     <th>Prix unitaire</th>
                     <th>Prix total</th>
                 </tr>
-                    <tr>
-                        <td><?=$ventes["nom_article"]?></td>
-                        <td><?=$ventes["quantite"]?></td>
-                        <td><?=$ventes["prix_unitaire"]?></td>
-                        <td><?=$ventes["prix"]?></td>
-                    </tr>    
-            </table>
+                <?php foreach ($vente_lignes as $ligne) : ?>
+                <tr>
+                    <td><?= $ligne["nom_article"] ?></td>
+                    <td><?= $ligne["quantite"] ?></td>
+                    <td><?= $ligne["prix_unitaire"] ?></td>
+                    <td><?= $ligne["prix"] ?></td>
+                </tr>
+                <?php endforeach; ?>    
+                <tr>
+                    <td colspan="3" style="text-align:right; font-weight:bold;">Total:</td>
+                    <td><strong><?= $ventes["total"] ?></strong></td>
+                </tr>
+        </table>
     </div>
     
 </div>

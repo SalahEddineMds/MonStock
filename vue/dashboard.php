@@ -89,7 +89,7 @@
               </ul>
             </div>
             <div class="button">
-              <a href="#">Voir Tout</a>
+              <a href="vente.php">Voir Tout</a>
             </div>
           </div>
           <div class="top-sales box">
