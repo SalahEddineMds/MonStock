@@ -8,6 +8,7 @@
 
 <div class="home-content">
     <div class="overview-boxes">
+        
         <button onclick="createNewVente()" class="valider">Nouveau</button>
 
         <?php if (!empty($_GET["id_vente"])): ?>

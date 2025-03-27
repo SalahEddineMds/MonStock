@@ -4,7 +4,7 @@ include("connexionbd.php");
 if (!empty($_GET["idVente"])) {
     $idVente = $_GET["idVente"];
 
-    // Set etat=0 in vente table
+    // Set etat=0
     $sql = "UPDATE vente SET etat = 0 WHERE id = ?";
     $req = $connexion->prepare($sql);
     $req->execute([$idVente]);
@@ -16,7 +16,7 @@ if (!empty($_GET["idVente"])) {
         $req->execute([$idVente]);
         $articles = $req->fetchAll(PDO::FETCH_ASSOC);
 
-        // Update each article's stock
+        // Update quantite
         foreach ($articles as $article) {
             $sql = "UPDATE article SET quantite = quantite + ? WHERE id = ?";
             $req = $connexion->prepare($sql);
