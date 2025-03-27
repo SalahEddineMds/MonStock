@@ -70,13 +70,5 @@
        window.print(); 
     });
 
-    function setPrix() {
-        var article = document.querySelector("#id_article");
-        var quantite = document.querySelector("#quantite");
-        var prix = document.querySelector("#prix");
-
-        var prixUnitaire = article.options[article.selectedIndex].getAttribute("data-prix");
-
-        prix.value = Number(quantite.value) * Number(prixUnitaire);
-    }
+    
 </script>

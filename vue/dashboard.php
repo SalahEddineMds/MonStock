@@ -62,7 +62,7 @@
                 <?php
                   foreach ($ventes as $key => $value) {
                     ?>
-                      <li><a href="#"><?php echo date("d M Y",strtotime($value["date_vente"])) ?></a></li>
+                      <li><?php echo date("d M Y",strtotime($value["date_vente"])) ?></li>
                     <?php
                   }
                 ?>
@@ -72,7 +72,7 @@
                 <?php
                   foreach ($ventes as $key => $value) {
                     ?>
-                      <li><a href="#"><?php echo $value["nom"]." ". $value["prenom"] ?></a></li>
+                      <li><a href="client.php"><?php echo $value["nom"]." ". $value["prenom"] ?></a></li>
                     <?php
                   }
                 ?>
@@ -82,7 +82,7 @@
                 <?php
                   foreach ($ventes as $key => $value) {
                     ?>
-                      <li><a href="#"><?php echo number_format($value["total"])." DZD"?></a></li>
+                      <li><?php echo number_format($value["total"])." DZD"?></li>
                     <?php
                   }
                 ?>
@@ -100,7 +100,7 @@
               foreach ($article as $key => $value) {
               ?>
               <li>
-                <a href="#">
+                <a href="article.php">
                   <!--<img src="images/sunglasses.jpg" alt="">-->
                   <span class="product"><?php echo $value["nom_article"] ?></span>
                 </a>
