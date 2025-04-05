@@ -146,18 +146,18 @@ function getFournisseur($id=null, $DONNErecherche = array()) {
 
 function getAchat($id=null) {
     if (!empty($id)) {
-        $sql = "SELECT co.id, nom_article, nom, prenom, co.quantite, prix, date_achat, prix_unitaire, adresse, telephone
-         FROM fournisseur AS f, achat AS co, article AS a WHERE co.id_article=a.id AND co.id_fournisseur=f.id AND co.id=? AND co.etat=?";
+        $sql = "SELECT a.id, nom, prenom, total, date_achat, adresse, telephone
+         FROM fournisseur AS f, achat AS a WHERE a.id_fournisseur=f.id AND a.id=? AND a.etat=?";
 
         $req = $GLOBALS["connexion"]->prepare($sql);
 
-        $req->execute(array($id, 1));
+        $req->execute(array($id,1));
 
         return $req->fetch();
 
     } else {
-        $sql = "SELECT co.id, nom_article, nom, prenom, co.quantite, prix, date_achat, a.id AS idArticle
-                FROM fournisseur AS f, achat AS co, article AS a WHERE co.id_article=a.id AND co.id_fournisseur=f.id AND co.etat=?";
+        $sql = "SELECT a.id, nom, prenom, total, date_achat
+                FROM fournisseur AS f, achat AS a WHERE a.id_fournisseur=f.id AND a.etat=?";
 
         $req = $GLOBALS["connexion"]->prepare($sql);
 
@@ -272,5 +272,19 @@ function getVenteLignes($idVente) {
     return $req->fetchAll(PDO::FETCH_ASSOC);
 }
 
+
+function getAchatLignes($idAchat) {
+    global $connexion;
+
+    $sql = "SELECT al.*, a.nom_article AS nom_article, a.prix_unitaire
+            FROM achat_ligne al
+            JOIN article a ON al.id_article = a.id
+            WHERE al.id_achat = ?";
+    
+    $req = $connexion->prepare($sql);
+    $req->execute([$idAchat]);
+
+    return $req->fetchAll(PDO::FETCH_ASSOC);
+}
 
 ?>

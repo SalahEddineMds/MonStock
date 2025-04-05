@@ -3,6 +3,7 @@
 
     if (!empty($_GET["id"])) {
         $achats = getAchat($_GET["id"]);
+        $achat_lignes = getAchatLignes($_GET["id"]);
     }
 ?>
 
@@ -40,13 +41,19 @@
                     <th>Prix unitaire</th>
                     <th>Prix total</th>
                 </tr>
-                    <tr>
-                        <td><?=$achats["nom_article"]?></td>
-                        <td><?=$achats["quantite"]?></td>
-                        <td><?=$achats["prix_unitaire"]?></td>
-                        <td><?=$achats["prix"]?></td>
-                    </tr>    
-            </table>
+                <?php foreach ($achat_lignes as $ligne) : ?>
+                <tr>
+                    <td><?= $ligne["nom_article"] ?></td>
+                    <td><?= $ligne["quantite"] ?></td>
+                    <td><?= $ligne["prix_unitaire"] ?></td>
+                    <td><?= $ligne["prix"] ?></td>
+                </tr>
+                <?php endforeach; ?>    
+                <tr>
+                    <td colspan="3" style="text-align:right; font-weight:bold;">Total:</td>
+                    <td><strong><?= number_format($achats["total"],0,".",',') ?> DZD</strong></td>
+                </tr>
+        </table>
     </div>
     
 </div>
@@ -63,13 +70,5 @@
        window.print(); 
     });
 
-    function setPrix() {
-        var article = document.querySelector("#id_article");
-        var quantite = document.querySelector("#quantite");
-        var prix = document.querySelector("#prix");
-
-        var prixUnitaire = article.options[article.selectedIndex].getAttribute("data-prix");
-
-        prix.value = Number(quantite.value) * Number(prixUnitaire);
-    }
+    
 </script>
