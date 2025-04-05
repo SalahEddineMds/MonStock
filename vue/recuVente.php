@@ -51,7 +51,7 @@
                 <?php endforeach; ?>    
                 <tr>
                     <td colspan="3" style="text-align:right; font-weight:bold;">Total:</td>
-                    <td><strong><?= $ventes["total"] ?></strong></td>
+                    <td><strong><?= number_format($ventes["total"],0,".",',') ?> DZD</strong></td>
                 </tr>
         </table>
     </div>

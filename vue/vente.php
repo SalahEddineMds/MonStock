@@ -109,7 +109,8 @@
 <script>
 
     function createNewVente() {
-       window.location.href = "../model/ajoutVente.php";
+        document.querySelector(".valider").style.display = "none";
+        window.location.href = "../model/ajoutVente.php";
     }
         
     function annuleVente(idVente, idArticle, quantite) {
