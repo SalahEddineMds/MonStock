@@ -204,13 +204,9 @@ function getCA() {
 }
 
 function getLastVente($id = null) {
-    $sql = "SELECT v.id, c.nom, c.prenom, v.total, v.date_vente
-            FROM vente v
-            JOIN client c ON v.id_client = c.id
-            WHERE v.etat = ?
-            ORDER BY v.date_vente DESC
-            LIMIT 10"; 
-
+    $sql = "SELECT v.id, nom, prenom, total, date_vente
+            FROM vente v, client c WHERE v.id_client = c.id AND v.etat = ? ORDER BY date_vente DESC LIMIT 10 "; 
+            
     $req = $GLOBALS["connexion"]->prepare($sql);
     $req->execute([1]);
 
@@ -221,13 +217,9 @@ function getLastVente($id = null) {
 
 function getMostVente($id=null) {
     $sql = "SELECT a.nom_article, SUM(vl.prix) AS prix
-            FROM vente v
-            JOIN vente_ligne vl ON v.id = vl.id_vente
-            JOIN article a ON vl.id_article = a.id
-            WHERE v.etat = ?
-            GROUP BY a.id, a.nom_article
-            ORDER BY prix DESC
-            LIMIT 10";
+            FROM vente v, vente_ligne vl, article a WHERE v.id = vl.id_vente AND vl.id_article = a.id AND v.etat = ?
+            GROUP BY a.id, a.nom_article ORDER BY prix DESC LIMIT 10";
+
 
     $req = $GLOBALS["connexion"]->prepare($sql);
     $req->execute([1]);
@@ -261,11 +253,9 @@ function getCategorie($id=null) {
 function getVenteLignes($idVente) {
     global $connexion;
 
-    $sql = "SELECT vl.*, a.nom_article AS nom_article, a.prix_unitaire
-            FROM vente_ligne vl
-            JOIN article a ON vl.id_article = a.id
-            WHERE vl.id_vente = ?";
-    
+    $sql = "SELECT vl.*, a.nom_article, a.prix_unitaire
+            FROM vente_ligne vl, article a WHERE vl.id_article = a.id AND vl.id_vente = ?";
+  
     $req = $connexion->prepare($sql);
     $req->execute([$idVente]);
 
@@ -276,11 +266,9 @@ function getVenteLignes($idVente) {
 function getAchatLignes($idAchat) {
     global $connexion;
 
-    $sql = "SELECT al.*, a.nom_article AS nom_article, a.prix_unitaire
-            FROM achat_ligne al
-            JOIN article a ON al.id_article = a.id
-            WHERE al.id_achat = ?";
-    
+    $sql = "SELECT al.*, a.nom_article, a.prix_unitaire
+            FROM achat_ligne al, article a WHERE al.id_article = a.id AND al.id_achat = ?";
+
     $req = $connexion->prepare($sql);
     $req->execute([$idAchat]);
 
