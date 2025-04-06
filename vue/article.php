@@ -106,7 +106,7 @@
                     </tr>
                 </table>
                 <br>
-                <button type="submit">Valider</button>
+                <button type="submit">Recherche</button>
             </form>
             <br>
             <table class="mtable">

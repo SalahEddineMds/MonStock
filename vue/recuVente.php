@@ -39,7 +39,7 @@
                     <th>Produit</th>
                     <th>Quantité</th>
                     <th>Prix unitaire</th>
-                    <th>Prix total</th>
+                    <th>Montant</th>
                 </tr>
                 <?php foreach ($vente_lignes as $ligne) : ?>
                 <tr>
