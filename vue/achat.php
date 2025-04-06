@@ -82,7 +82,7 @@
                     ?>
                     <tr>
                         <td><?=$value["nom"]. " ".$value["prenom"] ?></td>
-                        <td><?=number_format($value["total"])?></td>
+                        <td><?=number_format($value["total"],2,".","")?></td>
                         <td><?=date("d/m/Y H:i:s", strtotime($value["date_achat"]))?></td>
                         <td>
                             <a href="recuAchat.php?id=<?= $value["id"]?>" style="color: blue !important;"><i class='bx bx-receipt'></i></a>

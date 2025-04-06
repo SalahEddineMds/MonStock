@@ -36,7 +36,7 @@
 
         <table class="mtable">
                 <tr>
-                    <th>Désignation</th>
+                    <th>Produit</th>
                     <th>Quantité</th>
                     <th>Prix unitaire</th>
                     <th>Prix total</th>
@@ -51,7 +51,7 @@
                 <?php endforeach; ?>    
                 <tr>
                     <td colspan="3" style="text-align:right; font-weight:bold;">Total:</td>
-                    <td><strong><?= number_format($ventes["total"],0,".",',') ?> DZD</strong></td>
+                    <td><strong><?= number_format($ventes["total"],2,".","") ?> DZD</strong></td>
                 </tr>
         </table>
     </div>
