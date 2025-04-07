@@ -34,12 +34,12 @@
                 <form action="../model/ajoutArticleVente.php" method="post" id="article-form">
                     <input type="hidden" name="id_vente" value="<?= $_GET['id_vente'] ?>">
                     <label for="id_article">Article</label>
-                    <select onchange="setPrix()" name="id_article" id="id_article">
+                    <select onchange="remplirPrix()" name="id_article" id="id_article">
                         <?php 
                             $articles = getArticle();
                             if (!empty($articles) && is_array($articles)) {
                                 foreach ($articles as $key => $value) {
-                                    echo "<option data-prix='{$value["prix_unitaire"]}' value='{$value["id"]}'>{$value["nom_article"]} - {$value["quantite"]} disponible</option>";                                   
+                                    echo "<option data-prix='{$value["prix_vente_unitaire"]}' value='{$value["id"]}'>{$value["nom_article"]} - {$value["quantite"]} disponible</option>";                                   
                                 }
                             }
                         ?>  
@@ -48,8 +48,13 @@
                     <label for="quantite">Quantité</label>
                     <input onkeyup="setPrix()" type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="1">
 
-                    <label for="prix">Prix</label>
+                    <label for="prix_u">Prix unitaire</label>
+                    <input onkeyup="setPrix()" type="number" name="prix_u" id="prix_u" placeholder="Prix unitaire" min="0" step="any">
+                    
+                    <label for="prix">Prix total</label>
                     <input type="number" name="prix" id="prix" placeholder="Veuillez saisir le prix" min="0" step="any">
+                    
+
                     <button type="submit">Ajouter</button>
                     <?php
                     if (!empty($_SESSION["message"]["text"])) {
@@ -82,10 +87,11 @@
                     ?>
                     <tr>                      
                         <td><?=$value["nom"]. " ".$value["prenom"] ?></td>
-                        <td><?= number_format($value["total"],2,".","")?></td>
+                        <td><?= $value["total"] ?></td>
                         <td><?=date("d/m/Y H:i:s", strtotime($value["date_vente"]))?></td>
                         <td>
                             <a href="recuVente.php?id=<?= $value["id"]?>" style="color: blue !important;"><i class='bx bx-receipt'></i></a>
+                            <a href="vente.php?id_vente=<?=$value['id']?>" style="color: blue !important;"><i class='bx bx-edit-alt'></i></a>
                             <a onclick="annuleVente(<?= $value['id']?>)" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
                         </td>
 
@@ -120,12 +126,18 @@
     }
 
     function setPrix() {
-        var article = document.querySelector("#id_article");
         var quantite = document.querySelector("#quantite");
+        var prix_u = document.querySelector("#prix_u");
         var prix = document.querySelector("#prix");
 
-        var prixUnitaire = article.options[article.selectedIndex].getAttribute("data-prix");
+        
+        prix.value = Number(quantite.value) * Number(prix_u.value);
+    }
 
-        prix.value = Number(quantite.value) * Number(prixUnitaire);
+    function remplirPrix(){
+        var article = document.querySelector("#id_article")
+        var prix_u = article.options[article.selectedIndex].getAttribute("data-prix");
+        document.querySelector("#prix_u").value = prix_u;
+        setPrix();
     }
 </script>

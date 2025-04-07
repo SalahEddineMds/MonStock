@@ -2,12 +2,13 @@
     include("connexionbd.php");
     if (!empty($_POST["nom_article"])
         && !empty($_POST["id_categorie"])
-        && !empty($_POST["prix_unitaire"])
+        && !empty($_POST["prix_vente_unitaire"])
+        && !empty($_POST["prix_achat_unitaire"])
         && !empty($_POST["date_fabrication"])
         && !empty($_POST["date_expiration"])
         && !empty($_POST["id"])) {
 
-        $sql = "UPDATE article SET nom_article=?, id_categorie=?, quantite=?, prix_unitaire=?, 
+        $sql = "UPDATE article SET nom_article=?, id_categorie=?, quantite=?, prix_vente_unitaire=?, prix_achat_unitaire=?,
                 date_fabrication=?, date_expiration=? WHERE id=?";
             $req = $connexion->prepare($sql);
 
@@ -15,7 +16,8 @@
                 $_POST["nom_article"],
                 $_POST["id_categorie"],
                 $_POST["quantite"],
-                $_POST["prix_unitaire"],
+                $_POST["prix_vente_unitaire"],
+                $_POST["prix_achat_unitaire"],
                 $_POST["date_fabrication"],
                 $_POST["date_expiration"],
                 $_POST["id"]

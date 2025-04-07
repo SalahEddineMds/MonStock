@@ -3,7 +3,7 @@
 include("connexionbd.php");
 function getArticle($id=null, $DONNErecherche = array()) {
     if (!empty($id)) {
-        $sql = "SELECT nom_article, libelle_categorie, quantite, prix_unitaire, date_fabrication,
+        $sql = "SELECT nom_article, libelle_categorie, quantite, prix_vente_unitaire, prix_achat_unitaire, date_fabrication,
         date_expiration, id_categorie, a.id FROM article AS a, categorie_article AS c
         WHERE a.id_categorie = c.id AND a.id=?";
 
@@ -19,11 +19,14 @@ function getArticle($id=null, $DONNErecherche = array()) {
         if (!empty($nom_article)) $recherche .= "AND a.nom_article LIKE '%$nom_article%' ";
         if (!empty($id_categorie)) $recherche .= " AND a.id_categorie = $id_categorie ";
         if (!empty($quantite)) $recherche .= " AND a.quantite = $quantite ";
-        if (!empty($prix_unitaire)) $recherche .= " AND a.prix_unitaire = $prix_unitaire ";
+
+        if (!empty($prix_vente_unitaire)) $recherche .= " AND a.prix_vente_unitaire = $prix_vente_unitaire ";
+        if (!empty($prix_achat_unitaire)) $recherche .= " AND a.prix_achat_unitaire = $prix_achat_unitaire ";
+
         if (!empty($date_fabrication)) $recherche .= " AND DATE(a.date_fabrication) = '$date_fabrication' ";
         if (!empty($date_expiration)) $recherche .= " AND DATE(a.date_expiration) = '$date_expiration' ";
 
-        $sql = "SELECT nom_article, libelle_categorie, quantite, prix_unitaire, date_fabrication,
+        $sql = "SELECT nom_article, libelle_categorie, quantite, prix_vente_unitaire, prix_achat_unitaire, date_fabrication,
         date_expiration, id_categorie, a.id FROM article AS a, categorie_article AS c
         WHERE a.id_categorie = c.id $recherche";
 
@@ -33,7 +36,7 @@ function getArticle($id=null, $DONNErecherche = array()) {
 
         return $req->fetchAll();
     } else {
-        $sql = "SELECT nom_article, libelle_categorie, quantite, prix_unitaire, date_fabrication,
+        $sql = "SELECT nom_article, libelle_categorie, quantite, prix_vente_unitaire, prix_achat_unitaire, date_fabrication,
         date_expiration, id_categorie, a.id FROM article AS a, categorie_article AS c
         WHERE a.id_categorie = c.id";
 
@@ -253,7 +256,7 @@ function getCategorie($id=null) {
 function getVenteLignes($idVente) {
     global $connexion;
 
-    $sql = "SELECT vl.*, a.nom_article, a.prix_unitaire
+    $sql = "SELECT vl.*, a.nom_article, a.prix_vente_unitaire
             FROM vente_ligne vl, article a WHERE vl.id_article = a.id AND vl.id_vente = ?";
   
     $req = $connexion->prepare($sql);
@@ -266,7 +269,7 @@ function getVenteLignes($idVente) {
 function getAchatLignes($idAchat) {
     global $connexion;
 
-    $sql = "SELECT al.*, a.nom_article, a.prix_unitaire
+    $sql = "SELECT al.*, a.nom_article, a.prix_achat_unitaire
             FROM achat_ligne al, article a WHERE al.id_article = a.id AND al.id_achat = ?";
 
     $req = $connexion->prepare($sql);

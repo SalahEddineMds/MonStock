@@ -34,8 +34,11 @@
                 <label for="quantite">Quantité</label>
                 <input value="<?= !empty($_GET["id"]) ? $article["quantite"] : "" ?>" type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="0">
 
-                <label for="prix_unitaire">Prix unitaire</label>
-                <input value="<?= !empty($_GET["id"]) ? $article["prix_unitaire"] : "" ?>" type="number" name="prix_unitaire" id="prix_unitaire" placeholder="Veuillez saisir le prix" min="0" step="any">
+                <label for="prix_vente_unitaire">Prix de vente unitaire</label>
+                <input value="<?= !empty($_GET["id"]) ? $article["prix_vente_unitaire"] : "" ?>" type="number" name="prix_vente_unitaire" id="prix_vente_unitaire" placeholder="Veuillez saisir le prix" min="0" step="any">
+
+                <label for="prix_achat_unitaire">Prix d'achat unitaire</label>
+                <input value="<?= !empty($_GET["id"]) ? $article["prix_achat_unitaire"] : "" ?>" type="number" name="prix_achat_unitaire" id="prix_achat_unitaire" placeholder="Veuillez saisir le prix" min="0" step="any">
 
                 <label for="date_fabrication">Date de fabrication</label>
                 <input value="<?= !empty($_GET["id"]) ? $article["date_fabrication"] : "" ?>" type="datetime-local" name="date_fabrication" id="date_fabrication">
@@ -65,7 +68,8 @@
                         <th>Nom article</th>
                         <th>Catégorie</th>
                         <th>Quantité</th>
-                        <th>Prix unitaire</th>
+                        <th>Prix de vente unitaire</th>
+                        <th>Prix d'achat unitaire</th>
                         <th>Date fabrication</th>
                         <th>Date expiration</th>
                     </tr>
@@ -75,7 +79,7 @@
                         </td>
                         <td>
                             <select name="id_categorie" id="id_categorie">
-                                <option value="">-----Choisir-----</option>
+                                <option value="">---Choisir---</option>
                                 <?php 
                                 $categories = getCategorie();
                                 if (!empty($categories) && is_array($categories)) {
@@ -95,7 +99,10 @@
                             <input type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="0">
                         </td>
                         <td>
-                            <input type="number" name="prix_unitaire" id="prix_unitaire" placeholder="Veuillez saisir le prix" min="0" step="any">
+                            <input type="number" name="prix_vente_unitaire" id="prix_vente_unitaire" placeholder="Veuillez saisir le prix" min="0" step="any">
+                        </td>
+                        <td>
+                            <input type="number" name="prix_achat_unitaire" id="prix_achat_unitaire" placeholder="Veuillez saisir le prix" min="0" step="any">
                         </td>
                         <td>
                             <input type="date" name="date_fabrication" id="date_fabrication">
@@ -114,7 +121,8 @@
                     <th>Nom article</th>
                     <th>Catégorie</th>
                     <th>Quantité</th>
-                    <th>Prix unitaire</th>
+                    <th>Prix de vente unitaire</th>
+                    <th>Prix d'achat unitaire</th>
                     <th>Date fabrication</th>
                     <th>Date expiration</th>
                     <th>Action</th>
@@ -135,7 +143,8 @@
                         <td><?=$value["nom_article"]?></td>
                         <td><?=$value["libelle_categorie"]?></td>
                         <td><?=$value["quantite"]?></td>
-                        <td><?=number_format($value["prix_unitaire"])?></td>
+                        <td><?=number_format($value["prix_vente_unitaire"],2,".","")?></td>
+                        <td><?=number_format($value["prix_achat_unitaire"],2,".","")?></td>
                         <td><?=date("d/m/Y H:i:s",strtotime($value["date_fabrication"]))?></td>
                         <td><?=date("d/m/Y H:i:s",strtotime($value["date_expiration"]))?></td>
                         <td><a href="?id=<?=$value["id"]?>" style="color: blue !important;"><i class='bx bx-edit-alt'></i></a></td>

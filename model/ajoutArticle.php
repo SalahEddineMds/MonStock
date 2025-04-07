@@ -2,17 +2,19 @@
     include("connexionbd.php");
     if (!empty($_POST["nom_article"])
         && !empty($_POST["id_categorie"])
-        && !empty($_POST["prix_unitaire"])) {
+        && !empty($_POST["prix_vente_unitaire"])
+        && !empty($_POST["prix_achat_unitaire"])) {
 
-        $sql = "INSERT INTO $nom_base_de_donnes.article(nom_article, id_categorie, quantite, prix_unitaire, date_fabrication, date_expiration)
-                VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO $nom_base_de_donnes.article(nom_article, id_categorie, quantite, prix_vente_unitaire, prix_achat_unitaire, date_fabrication, date_expiration)
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
             $req = $connexion->prepare($sql);
 
             $req->execute(array(
                 $_POST["nom_article"],
                 $_POST["id_categorie"],
                 $_POST["quantite"],
-                $_POST["prix_unitaire"],
+                $_POST["prix_vente_unitaire"],
+                $_POST["prix_achat_unitaire"],
                 $_POST["date_fabrication"],
                 $_POST["date_expiration"]));
 

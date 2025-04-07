@@ -45,13 +45,22 @@
                 <tr>
                     <td><?= $ligne["nom_article"] ?></td>
                     <td><?= $ligne["quantite"] ?></td>
-                    <td><?= $ligne["prix_unitaire"] ?></td>
+                    <td>
+                        <?php 
+                            if ($ligne["quantite"] != 0) {
+                                $prix_unitaire = $ligne["prix"] / $ligne["quantite"];
+                            } else {
+                                $prix_unitaire = 0;
+                            }
+                        ?>
+                        <?= $prix_unitaire ?>
+                    </td>
                     <td><?= $ligne["prix"] ?></td>
                 </tr>
                 <?php endforeach; ?>    
                 <tr>
                     <td colspan="3" style="text-align:right; font-weight:bold;">Total:</td>
-                    <td><strong><?= number_format($ventes["total"],2,".","") ?> DZD</strong></td>
+                    <td><strong><?=$ventes["total"]?> DZD</strong></td>
                 </tr>
         </table>
     </div>
