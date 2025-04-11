@@ -4,8 +4,6 @@
         && !empty($_POST["id_categorie"])
         && !empty($_POST["prix_vente_unitaire"])
         && !empty($_POST["prix_achat_unitaire"])
-        && !empty($_POST["date_fabrication"])
-        && !empty($_POST["date_expiration"])
         && !empty($_POST["id"])) {
 
         $sql = "UPDATE article SET nom_article=?, id_categorie=?, quantite=?, prix_vente_unitaire=?, prix_achat_unitaire=?,

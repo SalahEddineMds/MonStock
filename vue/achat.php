@@ -38,7 +38,7 @@
                             $articles = getArticle();
                             if (!empty($articles) && is_array($articles)) {
                                 foreach ($articles as $key => $value) {
-                                    echo "<option data-prix='{$value["prix_unitaire"]}' value='{$value["id"]}'>{$value["nom_article"]} - {$value["quantite"]} disponible</option>";                                   
+                                    echo "<option data-prix='{$value["prix_achat_unitaire"]}' value='{$value["id"]}'>{$value["nom_article"]} - {$value["quantite"]} disponible</option>";                                   
                                 }
                             }
                         ?> 
@@ -47,8 +47,12 @@
                     <label for="quantite">Quantité</label>
                     <input onkeyup="setPrix()" type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="1">
 
-                    <label for="prix">Prix</label>
-                    <input type="number" name="prix" id="prix" placeholder="Veuillez saisir le prix" min="0" step="any">
+                    <label for="prix_u">Prix unitaire</label>
+                    <input onkeyup="setPrix()" type="number" name="prix_u" id="prix_u" placeholder="Veuillez saisir le prix unitaire" min="0" step="any">
+
+                    <label for="prix">Prix total</label>
+                    <input type="number" name="prix" id="prix" placeholder="Prix total" min="0" step="any" readonly>
+
                     <button type="submit">Ajouter</button>
 
                     <?php
@@ -120,12 +124,10 @@
 
 
     function setPrix() {
-        var article = document.querySelector("#id_article");
         var quantite = document.querySelector("#quantite");
+        var prix_u = document.querySelector("#prix_u");
         var prix = document.querySelector("#prix");
 
-        var prixUnitaire = article.options[article.selectedIndex].getAttribute("data-prix");
-
-        prix.value = Number(quantite.value) * Number(prixUnitaire);
+        prix.value = Number(quantite.value) * Number(prix_u.value);
     }
 </script>
