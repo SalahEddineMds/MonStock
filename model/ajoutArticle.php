@@ -1,9 +1,7 @@
 <?php
     include("connexionbd.php");
     if (!empty($_POST["nom_article"])
-        && !empty($_POST["id_categorie"])
-        && !empty($_POST["prix_vente_unitaire"])
-        && !empty($_POST["prix_achat_unitaire"])) {
+        && !empty($_POST["id_categorie"])) {
 
         $sql = "INSERT INTO $nom_base_de_donnes.article(nom_article, id_categorie, quantite, prix_vente_unitaire, prix_achat_unitaire, date_fabrication, date_expiration)
                 VALUES (?, ?, ?, ?, ?, ?, ?)";

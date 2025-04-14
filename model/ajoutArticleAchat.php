@@ -29,7 +29,7 @@ if (!empty($_POST["id_achat"]) && !empty($_POST["id_article"]) && !empty($_POST[
     $req = $connexion->prepare($sql);
     $req->execute([$id_achat, $id_article, $quantite, $total_price]);
 
-    // misajour total
+    // mise a jour total
     $sql = "UPDATE achat SET total = total + ? WHERE id = ?";
     $req = $connexion->prepare($sql);
     $req->execute([$total_price, $id_achat]);
@@ -46,7 +46,7 @@ if (!empty($_POST["id_achat"]) && !empty($_POST["id_article"]) && !empty($_POST[
         $nouveau_prix_moyen = $prix_u; // fallback en cas d'erreur
     }
 
-    // Mise à jour article : nouvelle quantité et nouveau prix moyen
+    // mise a jour article (nouvelle quantité et nouveau prix moyen)
     $sql = "UPDATE article SET quantite = ?, prix_achat_unitaire = ? WHERE id = ?";
     $req = $connexion->prepare($sql);
     $req->execute([$nouvelle_quantite, $nouveau_prix_moyen, $id_article]);
