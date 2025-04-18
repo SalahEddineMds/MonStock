@@ -71,7 +71,31 @@
         </div>
         <?php endif; ?>
 
-        <div class="box">
+        <div style="display: block;" class="box">
+            <form action="" method="get">
+                <table class="mtable">
+                    <tr>
+                        <th>Client</th>
+                        <th>Montant</th>
+                        <th>Date</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" name="nom_p_client" id="nom_p_client" placeholder="Veuillez saisir le nom ou prenom">
+                        </td>
+                        <td>
+                            <input type="number" name="montant" id="montant" placeholder="Veuillez saisir le montant" min="0" step="any">
+                        </td>
+                        <td>
+                            <input type="date" name="date" id="date">
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <button type="submit">Recherche</button>
+            </form>
+            <br>
+                    
             <table class="mtable">
                 <tr>
                     <th>Client</th>
@@ -80,7 +104,11 @@
                     <th>Action</th>
                 </tr>
                 <?php
-                $ventes = getVente();
+                if (!empty($_GET)) {
+                    $ventes = getVente(null, $_GET);
+                } else {
+                    $ventes = getVente();
+                }
                 if (!empty($ventes) && is_array( $ventes )) {
                     foreach ($ventes as $key => $value) {
                         if ($value["total"] > 0) {

@@ -6,6 +6,15 @@
         && !empty($_POST["adresse"])
         && !empty($_POST["id"])) {
 
+
+            // check fournisseur si fournisseur par default
+            if ($_POST["id"] == 1 && $_POST["nom"] == "Fournisseur" && $_POST["prenom"] == "Default") {
+                $_SESSION["message"]["text"] = "Le fournisseur par défaut ne peut pas être modifié.";
+                $_SESSION["message"]["type"] = "danger";
+                header("Location: ../vue/fournisseur.php");
+                exit;
+            }
+
         $sql = "UPDATE fournisseur SET nom=?, prenom=?, telephone=?, adresse=?
                 WHERE id=?";
             $req = $connexion->prepare($sql);

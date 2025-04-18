@@ -21,6 +21,17 @@
             $insert->execute();
         }
 
+        // Check si fournisseur id 1 existe
+        $stmt = $connexion->prepare("SELECT id FROM fournisseur WHERE id = 1");
+        $stmt->execute();
+
+        if ($stmt->rowCount() === 0) {
+            // Insert fournisseur id 1 default fournisseur si il n'existe pas
+            $insert = $connexion->prepare("INSERT INTO fournisseur (id, nom, prenom, adresse, telephone, etat) 
+                                        VALUES (1, 'Fournisseur', 'Default', '/', '/', '1')");
+            $insert->execute();
+        }
+
         return $connexion;
     } catch (Exception $e) {
         die("Erreur de connexion : ". $e->getMessage());
