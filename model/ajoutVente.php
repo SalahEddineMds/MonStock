@@ -2,7 +2,7 @@
 include("connexionbd.php");
 
 // Create a new sale with default client assigned
-$sql = "INSERT INTO vente (id_client, total, date_vente, etat) VALUES (1, 0, NOW(), 1)";
+$sql = "INSERT INTO vente (id_client, total, date_vente, etat) VALUES (1, 0, NOW(), '0')";
 $req = $connexion->prepare($sql);
 $req->execute();
 

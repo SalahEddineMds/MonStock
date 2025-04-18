@@ -97,27 +97,6 @@ function getVente($id=null, $DONNErecherche = array()) {
 
         return $req->fetch();
 
-    } elseif (!empty($DONNErecherche)) {
-        $recherche = "";
-        extract($DONNErecherche);
-        
-        if (!empty($nom_p_client)) $recherche .= " AND (c.nom LIKE '%$nom_p_client%' OR c.prenom LIKE '%$nom_p_client%') ";
-            
-        if (!empty($montant)) $recherche .= " AND total = $montant ";
-        
-        if (!empty($date)) $recherche .= " AND DATE(date_vente) = '$date' ";
-        
-
-        $sql = "SELECT v.id, nom, prenom, total, date_vente
-                FROM client AS c, vente AS v 
-                WHERE v.id_client = c.id AND v.etat = 1 $recherche";
-
-        $req = $GLOBALS["connexion"]->prepare($sql);
-
-        $req->execute();
-
-        return $req->fetchAll();
-
     } else {   
         $sql = "SELECT v.id, nom, prenom, total, date_vente
                 FROM client AS c, vente AS v WHERE v.id_client=c.id AND v.etat=?";

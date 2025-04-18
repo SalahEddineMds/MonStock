@@ -71,30 +71,7 @@
         </div>
         <?php endif; ?>
 
-        <div style="display: block;" class="box">
-            <form action="" method="get">
-                <table class="mtable">
-                    <tr>
-                        <th>Client</th>
-                        <th>Montant</th>
-                        <th>Date</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" name="nom_p_client" id="nom_p_client" placeholder="Veuillez saisir le nom ou prenom">
-                        </td>
-                        <td>
-                            <input type="number" name="montant" id="montant" placeholder="Veuillez saisir le montant" min="0" step="any">
-                        </td>
-                        <td>
-                            <input type="date" name="date" id="date">
-                        </td>
-                    </tr>
-                </table>
-                <br>
-                <button type="submit">Recherche</button>
-            </form>
-            <br>
+        <div class="box">
                     
             <table class="mtable">
                 <tr>
