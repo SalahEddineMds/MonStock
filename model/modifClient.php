@@ -6,6 +6,14 @@
         && !empty($_POST["adresse"])
         && !empty($_POST["id"])) {
 
+            // check client si client par default
+            if ($_POST["id"] == 1 && $_POST["nom"] == "Client" && $_POST["prenom"] == "Default") {
+                $_SESSION["message"]["text"] = "Le client par défaut ne peut pas être modifié.";
+                $_SESSION["message"]["type"] = "danger";
+                header("Location: ../vue/client.php");
+                exit;
+            }
+
         $sql = "UPDATE client SET nom=?, prenom=?, telephone=?, adresse=?
                 WHERE id=?";
             $req = $connexion->prepare($sql);

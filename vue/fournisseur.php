@@ -10,6 +10,7 @@
     <div class="overview-boxes">
         <div class="box">
             <form action=" <?= !empty($_GET["id"]) ? "../model/modifFournisseur.php" : "../model/ajoutFournisseur.php" ?>" method="post">
+                <h3><?= !empty($_GET["id"]) ? "Modifier Fournisseur" : "Ajouter un Fournisseur" ?></h3>
                 <label for="nom">Nom</label>
                 <input value="<?= !empty($_GET["id"]) ? $fournisseur["nom"] : "" ?>" type="text" name="nom" id="nom" placeholder="Veuillez saisir le nom">
                 <input value="<?= !empty($_GET["id"]) ? $fournisseur["id"] : "" ?>" type="hidden" name="id" id="id">
