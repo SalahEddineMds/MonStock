@@ -8,10 +8,7 @@
             <div class="right-side">
               <div class="box-topic">Achat</div>
               <div class="number"> <?php echo getAllAchat()["nbre"] ?> </div>
-              <div class="indicator">
-                <i class="bx bx-up-arrow-alt"></i>
-                <span class="text">Depuis hier</span>
-              </div>
+              
             </div>
             <i class="bx bx-cart-alt cart"></i>
           </div>
@@ -19,21 +16,15 @@
             <div class="right-side">
               <div class="box-topic">Vente</div>
               <div class="number"><?php echo getAllVente()["nbre"] ?></div>
-              <div class="indicator">
-                <i class="bx bx-up-arrow-alt"></i>
-                <span class="text">Depuis hier</span>
-              </div>
+              
             </div>
             <i class="bx bxs-cart-add cart two"></i>
           </div>
-          <div class="box">
+          <div class="box <?= LowStock() ? 'alert-low-stock tooltip' : '' ?>" <?= LowStock() ? 'data-tooltip="Stock Faible"' : '' ?>>
             <div class="right-side">
               <div class="box-topic">Article</div>
               <div class="number"><?php echo getAllArticle()["nbre"] ?></div>
-              <div class="indicator">
-                <i class="bx bx-up-arrow-alt"></i>
-                <span class="text">Depuis hier</span>
-              </div>
+              
             </div>
             <i class="bx bx-cart cart three"></i>
           </div>
@@ -41,17 +32,14 @@
             <div class="right-side">
               <div class="box-topic">Chiffre d'affaire</div>
               <div class="number"><?php echo number_format(getCA()["total"]). " DZD" ?></div>
-              <div class="indicator">
-                <i class="bx bx-down-arrow-alt down"></i>
-                <span class="text">Aujourd'hui</span>
-              </div>
+              
             </div>
             <i class="bx bxs-cart-download cart four"></i>
           </div>
         </div>
 
         <div class="sales-boxes">
-          <div class="recent-sales box">
+          <div class="recent-sales vabox">
             <div class="title">Vente recentes</div>
             <?php
               $ventes = getLastVente();

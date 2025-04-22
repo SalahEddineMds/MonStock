@@ -1,5 +1,4 @@
 <?php
-
 include("connexionbd.php");
 
 error_reporting(E_ALL);
@@ -93,7 +92,7 @@ function getClient($id=null, $DONNErecherche = array()) {
 function getVente($id=null, $DONNErecherche = array()) {
     if (!empty($id)) {
         $sql = "SELECT v.id, nom, prenom, total, date_vente, adresse, telephone
-         FROM client AS c, vente AS v WHERE v.id_client=c.id AND v.id=? AND v.etat=?";
+         FROM client AS c, vente AS v WHERE v.id_client=c.id AND v.id=? AND v.etat=? ORDER BY v.date_vente ASC";
 
         $req = $GLOBALS["connexion"]->prepare($sql);
 
@@ -149,14 +148,14 @@ function getVente($id=null, $DONNErecherche = array()) {
         
         $sql = "SELECT v.id, nom, prenom, total, date_vente
                 FROM client AS c, vente AS v
-                WHERE v.id_client = c.id AND v.etat = ?" . $recherche;
+                WHERE v.id_client = c.id AND v.etat = ?" . $recherche . " ORDER BY v.date_vente ASC";
         
         $req = $GLOBALS["connexion"]->prepare($sql);
         $req->execute($params);
         return $req->fetchAll();
     } else {   
         $sql = "SELECT v.id, nom, prenom, total, date_vente
-                FROM client AS c, vente AS v WHERE v.id_client=c.id AND v.etat=?";
+                FROM client AS c, vente AS v WHERE v.id_client=c.id AND v.etat=? ORDER BY v.date_vente ASC";
 
         $req = $GLOBALS["connexion"]->prepare($sql);
 
@@ -207,7 +206,7 @@ function getFournisseur($id=null, $DONNErecherche = array()) {
 function getAchat($id=null, $DONNErecherche = array()) {
     if (!empty($id)) {
         $sql = "SELECT a.id, nom, prenom, total, date_achat, adresse, telephone
-         FROM fournisseur AS f, achat AS a WHERE a.id_fournisseur=f.id AND a.id=? AND a.etat=?";
+         FROM fournisseur AS f, achat AS a WHERE a.id_fournisseur=f.id AND a.id=? AND a.etat=? ORDER BY a.date_achat ASC";
 
         $req = $GLOBALS["connexion"]->prepare($sql);
 
@@ -263,14 +262,14 @@ function getAchat($id=null, $DONNErecherche = array()) {
         
         $sql = "SELECT a.id, nom, prenom, total, date_achat
                 FROM fournisseur AS f, achat AS a
-                WHERE a.id_fournisseur = f.id AND a.etat = ?" . $recherche;
+                WHERE a.id_fournisseur = f.id AND a.etat = ?" . $recherche . " ORDER BY a.date_achat ASC";
         
         $req = $GLOBALS["connexion"]->prepare($sql);
         $req->execute($params);
         return $req->fetchAll();
     } else {
         $sql = "SELECT a.id, nom, prenom, total, date_achat
-                FROM fournisseur AS f, achat AS a WHERE a.id_fournisseur=f.id AND a.etat=?";
+                FROM fournisseur AS f, achat AS a WHERE a.id_fournisseur=f.id AND a.etat=? ORDER BY a.date_achat ASC";
 
         $req = $GLOBALS["connexion"]->prepare($sql);
 
@@ -365,9 +364,8 @@ function getCategorie($id=null) {
 
 function getVenteLignes($idVente) {
     global $connexion;
-
     $sql = "SELECT vl.*, a.nom_article, a.prix_vente_unitaire
-            FROM vente_ligne vl, article a WHERE vl.id_article = a.id AND vl.id_vente = ?";
+            FROM vente_ligne vl, article a WHERE vl.id_article = a.id AND vl.id_vente = ? ORDER BY vl.id ASC";
   
     $req = $connexion->prepare($sql);
     $req->execute([$idVente]);
@@ -378,14 +376,21 @@ function getVenteLignes($idVente) {
 
 function getAchatLignes($idAchat) {
     global $connexion;
-
     $sql = "SELECT al.*, a.nom_article, a.prix_achat_unitaire
-            FROM achat_ligne al, article a WHERE al.id_article = a.id AND al.id_achat = ?";
+            FROM achat_ligne al, article a WHERE al.id_article = a.id AND al.id_achat = ? ORDER BY al.id ASC";
 
     $req = $connexion->prepare($sql);
     $req->execute([$idAchat]);
 
     return $req->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function LowStock(){
+    global $connexion;
+    $sql = "SELECT COUNT(*) as nb FROM article WHERE quantite < 5";
+    $req = $connexion->query($sql);
+    $res = $req->fetch();
+    return $res['nb'] > 0; 
 }
 
 ?>

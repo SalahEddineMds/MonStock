@@ -628,3 +628,79 @@ ol.mtable li:nth-child(even) {
 .box{
   flex: 1;
 }
+
+.sales-boxes .vabox .button {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.sales-boxes .vabox .button a {
+  color: #fff;
+  background: #0a2558;
+  padding: 4px 12px;
+  font-size: 15px;
+  font-weight: 400;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.sales-boxes .vabox .button a:hover {
+  background: #0d3073;
+}
+.sales-boxes .vabox .title {
+  font-size: 24px;
+  font-weight: 500;
+  /* margin-bottom: 10px; */
+}
+
+.alert-low-stock{
+  box-shadow: 0 0 15px red  !important;
+  border: 2px solid red;
+  transition: 0.3s;
+}
+
+/* Base tooltip styling */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Custom tooltip */
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 0, 0, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: nowrap;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Show the tooltip on hover */
+.tooltip:hover::after,
+.tooltip:hover::before {
+  visibility: visible;
+  opacity: 1;
+}
+
+.low-stock-row {
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.7);
+  background-color: rgba(255, 200, 200, 0.2);
+  transition: all 0.3s ease;
+}
+
+.low-stock-row:hover {
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.8);
+  background-color: rgba(255, 200, 200, 0.3);
+}
+

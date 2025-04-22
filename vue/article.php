@@ -139,8 +139,10 @@
                 
                 if (!empty($articles) && is_array( $articles )) {
                     foreach ($articles as $key => $value) {    
+                        // Check si quantite < 5
+                        $lowStockClass = ($value["quantite"] < 5) ? 'low-stock-row' : '';
                 ?>
-                    <tr>
+                    <tr class="<?= $lowStockClass ?>">
                         <td><?=$value["nom_article"]?></td>
                         <td><?=$value["libelle_categorie"]?></td>
                         <td><?=$value["quantite"]?></td>
