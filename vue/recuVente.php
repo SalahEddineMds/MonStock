@@ -41,23 +41,39 @@
                     <th>Prix unitaire</th>
                     <th>Montant</th>
                 </tr>
-                <?php foreach ($vente_lignes as $ligne) : ?>
+                <?php
+                    
+                    $grouped_lignes = [];
+
+                    foreach ($vente_lignes as $ligne) {
+                        $prix_unitaire = $ligne["quantite"] != 0 ? $ligne["prix"] / $ligne["quantite"] : 0;
+
+                        $key = $ligne["id_article"] . '_' . number_format($prix_unitaire, 2, ".", "");
+
+                        if (!isset($grouped_lignes[$key])) {
+                            $grouped_lignes[$key] = [
+                                "nom_article" => $ligne["nom_article"],
+                                "quantite" => $ligne["quantite"],
+                                "prix_unitaire" => $prix_unitaire,
+                                "prix_total" => $ligne["prix"]
+                            ];
+                        } else {
+                            $grouped_lignes[$key]["quantite"] += $ligne["quantite"];
+                            $grouped_lignes[$key]["prix_total"] += $ligne["prix"];
+                        }
+                    }
+
+                    foreach ($grouped_lignes as $ligne) :
+                ?>
                 <tr>
                     <td><?= $ligne["nom_article"] ?></td>
                     <td><?= $ligne["quantite"] ?></td>
-                    <td>
-                        <?php 
-                            if ($ligne["quantite"] != 0) {
-                                $prix_unitaire = $ligne["prix"] / $ligne["quantite"];
-                            } else {
-                                $prix_unitaire = 0;
-                            }
-                        ?>
-                        <?= number_format($prix_unitaire, 2, ".", "") ?>
-                    </td>
-                    <td><?= number_format($ligne["prix"], 2, ".", "") ?></td>
+                    <td><?= number_format($ligne["prix_unitaire"], 2, ".", "") ?></td>
+                    <td><?= number_format($ligne["prix_total"], 2, ".", "") ?></td>
                 </tr>
-                <?php endforeach; ?>    
+                <?php endforeach; ?>
+
+  
                 <tr>
                     <td colspan="3" style="text-align:right; font-weight:bold;">Total:</td>
                     <td><strong><?=number_format($ventes["total"], 2, ".", "")?> DZD</strong></td>

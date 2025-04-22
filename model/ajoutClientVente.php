@@ -11,7 +11,6 @@ if (!empty($_POST["id_client"]) && !empty($_POST["id_vente"])) {
     $req->execute([$id_client, $id_vente]);
 
     if ($req->rowCount() > 0) {
-        $_SESSION["message"]["text"] = "Vente validée avec succès.";
         $_SESSION["message"]["type"] = "success";
     } else {
         $_SESSION["message"]["text"] = "Erreur lors de la validation de la vente.";
@@ -19,6 +18,6 @@ if (!empty($_POST["id_client"]) && !empty($_POST["id_vente"])) {
     }
 }
 
-header("Location: ../vue/vente.php?id_vente=" . $id_vente);
+header("Location: ../vue/vente.php");
 exit;
 ?>
