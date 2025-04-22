@@ -185,9 +185,9 @@ nav .profile-details i {
   margin-bottom: 26px;
 }
 .overview-boxes .box {
-  display: inline-block;
+  display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   min-width: calc(100% / 4 - 15px);
   background: #fff;
   padding: 15px 14px;
@@ -608,3 +608,23 @@ ol.mtable li:nth-child(even) {
 }
 /* source http://jsfiddle.net/mturjak/2wk6Q/1949/ */
 
+.overview-boxes .vabox {
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  min-width: calc(100% / 4 - 15px);
+  background: #fff;
+  padding: 15px 14px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  margin: 5px;
+}
+
+.va-container{
+  display: flex;
+  gap: 10;
+  width: 100%;
+}
+.box{
+  flex: 1;
+}
