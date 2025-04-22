@@ -16,7 +16,7 @@
                 <input value="<?= !empty($_GET["id"]) ? $article["id"] : "" ?>" type="hidden" name="id" id="id">
 
                 <label for="id_categorie">Catégorie</label>
-                <select name="id_categorie" id="id_categorie">
+                <select name="id_categorie" id="id_categorie" class="tom-select">
                     <?php 
                     $categories = getCategorie();
                     if (!empty($categories) && is_array($categories)) {
@@ -79,7 +79,7 @@
                             <input type="text" name="nom_article" id="nom_article" placeholder="Veuillez saisir le nom">
                         </td>
                         <td>
-                            <select name="id_categorie" id="id_categorie">
+                            <select name="id_categorie" id="id_categorie" class="tom-select">
                                 <option value="">---Choisir---</option>
                                 <?php 
                                 $categories = getCategorie();

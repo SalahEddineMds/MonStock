@@ -15,7 +15,7 @@
                 <form action="../model/ajoutFournisseurAchat.php" method="post" id="achat-form">
                     <input type="hidden" name="id_achat" value="<?= $_GET['id_achat'] ?>">
                     <label for="id_fournisseur">Fournisseur</label>
-                        <select name="id_fournisseur" id="id_fournisseur">
+                        <select name="id_fournisseur" id="id_fournisseur" class="tom-select">
                         <?php 
                             $fournisseurs = getFournisseur();
                             if (!empty($fournisseurs) && is_array($fournisseurs)) {
@@ -32,7 +32,7 @@
                     <form action="../model/ajoutArticleAchat.php" method="post" id="article-form">
                         <input type="hidden" name="id_achat" value="<?= $_GET['id_achat'] ?>">
                         <label for="id_article">Article</label>
-                        <select onchange="setPrix()" name="id_article" id="id_article">
+                        <select onchange="setPrix()" name="id_article" id="id_article" class="tom-select">
                             <?php 
                                 $articles = getArticle();
                                 if (!empty($articles) && is_array($articles)) {

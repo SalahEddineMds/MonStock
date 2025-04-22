@@ -17,7 +17,7 @@
                 <form action="../model/ajoutClientVente.php" method="post" id="vente-form">
                     <input type="hidden" name="id_vente" value="<?= $_GET['id_vente'] ?>">
                     <label for="id_client">Client</label>
-                    <select name="id_client" id="id_client">
+                    <select name="id_client" id="id_client" class="tom-select">
                         <?php 
                             $clients = getClient();
                             if (!empty($clients) && is_array($clients)) {
@@ -35,7 +35,7 @@
                     <form action="../model/ajoutArticleVente.php" method="post" id="article-form">
                         <input type="hidden" name="id_vente" value="<?= $_GET['id_vente'] ?>">
                         <label for="id_article">Article</label>
-                        <select onchange="remplirPrix()" name="id_article" id="id_article">
+                        <select onchange="remplirPrix()" name="id_article" id="id_article" class="tom-select">
                             <option value="" disabled selected>Choisir un article</option>
                             <?php 
                                 $articles = getArticle();

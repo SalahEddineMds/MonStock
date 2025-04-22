@@ -41,7 +41,26 @@
                     <th>Prix unitaire</th>
                     <th>Montant</th>
                 </tr>
-                <?php foreach ($achat_lignes as $ligne) : ?>
+                <?php
+                // Regrouper les lignes par article et prix
+                $grouped_lignes = [];
+
+                foreach ($achat_lignes as $ligne) {
+                    $key = $ligne["id_article"] . "_" . $ligne["prix"]; // Group by both article and prix
+                    if (!isset($grouped_lignes[$key])) {
+                        $grouped_lignes[$key] = [
+                            "nom_article" => $ligne["nom_article"],
+                            "quantite" => $ligne["quantite"],
+                            "prix" => $ligne["prix"],
+                        ];
+                    } else {
+                        $grouped_lignes[$key]["quantite"] += $ligne["quantite"];
+                        $grouped_lignes[$key]["prix"] += $ligne["prix"];
+                    }
+                }
+                ?>
+
+                <?php foreach ($grouped_lignes as $ligne) : ?>
                 <tr>
                     <td><?= $ligne["nom_article"] ?></td>
                     <td><?= $ligne["quantite"] ?></td>
