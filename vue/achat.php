@@ -7,10 +7,9 @@
 ?>
 
 <div class="home-content">
+    <button onclick="createNewAchat()" class="valider" style="margin-left: 25px; margin-bottom: 5px;">Nouveau Achat</button>
     <div class="overview-boxes">
-        <div class="va-container">
-            <button onclick="createNewAchat()" class="valider">Nouveau</button>
-
+        <div class="va-container"> 
             <?php if (!empty($_GET["id_achat"])): ?>
             <div class="vabox">
                 <form action="../model/ajoutFournisseurAchat.php" method="post" id="achat-form">

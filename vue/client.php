@@ -8,7 +8,7 @@
 
 <div class="home-content">
     <div class="overview-boxes">
-        <div class="box">
+        <div class="vabox">
             <form action=" <?= !empty($_GET["id"]) ? "../model/modifClient.php" : "../model/ajoutClient.php" ?>" method="post">
                 <h3><?= !empty($_GET["id"]) ? "Modifier Client" : "Ajouter un Client" ?></h3>
                 <label for="nom">Nom</label>

@@ -8,7 +8,7 @@
 
 <div class="home-content">
     <div class="overview-boxes">
-        <div class="box">
+        <div class="vabox">
             <form action=" <?= !empty($_GET["id"]) ? "../model/modifCategorie.php" : "../model/ajoutCategorie.php" ?>" method="post">
                 <h3><?= !empty($_GET["id"]) ? "Modifier Catégorie" : "Ajouter un Catégorie" ?></h3>
                 <label for="libelle_categorie">Libellé</label>
@@ -30,7 +30,7 @@
 
             </form>
         </div>
-        <div class="box">
+        <div class="vabox">
             <table class="mtable">
                 <tr>
                     <th>Libellé</th>

@@ -7,9 +7,10 @@
 ?>
 
 <div class="home-content">
-    <div class="overview-boxes">
+    <?php if (empty($_GET["id_vente"])): ?>
+        <button onclick="createNewVente()" class="valider" style="margin-left: 25px; margin-bottom: 5px;">Nouveau Vente</button>
+    <?php endif; ?>    <div class="overview-boxes">
         <div class="va-container">
-            <button onclick="createNewVente()" class="valider">Nouveau Vente</button>
 
             <?php if (!empty($_GET["id_vente"])): ?>
             <div class="vabox">
@@ -146,7 +147,7 @@
 <script>
 
     function createNewVente() {
-        document.querySelector(".valider").style.display = "none";
+        document.querySelector(".valider").disabled = true;
         window.location.href = "../model/ajoutVente.php";
     }
         
