@@ -35,6 +35,7 @@
                     <input type="hidden" name="id_vente" value="<?= $_GET['id_vente'] ?>">
                     <label for="id_article">Article</label>
                     <select onchange="remplirPrix()" name="id_article" id="id_article">
+                        <option value="" disabled selected>Choisir un article</option>
                         <?php 
                             $articles = getArticle();
                             if (!empty($articles) && is_array($articles)) {
@@ -71,7 +72,31 @@
         </div>
         <?php endif; ?>
 
-        <div class="box">
+
+        <div style="display: block;" class="box">
+            <form action="" method="get">
+                <table class="mtable">
+                    <tr>
+                        <th>Client</th>
+                        <th>Montant</th>
+                        <th>Date</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" name="nom_p_client" id="nom_p_client" placeholder="Veuillez saisir le nom ou prenom">
+                        </td>
+                        <td>
+                            <input type="number" name="montant" id="montant" placeholder="Veuillez saisir le montant" min="0" step="any">
+                        </td>
+                        <td>
+                            <input type="date" name="date" id="date">
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <button type="submit">Recherche</button>
+            </form>
+            <br>
                     
             <table class="mtable">
                 <tr>
@@ -95,9 +120,9 @@
                         <td><?= $value["total"] ?></td>
                         <td><?=date("d/m/Y H:i:s", strtotime($value["date_vente"]))?></td>
                         <td>
-                            <a href="recuVente.php?id=<?= $value["id"]?>" style="color: blue !important;"><i class='bx bx-receipt'></i></a>
-                            <a href="vente.php?id_vente=<?=$value['id']?>" style="color: blue !important;"><i class='bx bx-edit-alt'></i></a>
-                            <a onclick="annuleVente(<?= $value['id']?>)" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
+                            <a href="recuVente.php?id=<?= $value["id"]?>" title="Afficher le Reçu" style="color: blue !important;"><i class='bx bx-receipt'></i></a>
+                            <a href="vente.php?id_vente=<?=$value['id']?>" title="Ajouter à Vente" style="color: blue !important;"><i class='bx bx-edit-alt'></i></a>
+                            <a onclick="annuleVente(<?= $value['id']?>)" title="Supprimer cette Vente" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
                         </td>
 
                     </tr>    

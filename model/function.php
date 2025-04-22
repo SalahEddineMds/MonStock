@@ -1,6 +1,10 @@
 <?php
 
 include("connexionbd.php");
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 function getArticle($id=null, $DONNErecherche = array()) {
     if (!empty($id)) {
         $sql = "SELECT nom_article, libelle_categorie, quantite, prix_vente_unitaire, prix_achat_unitaire, date_fabrication,
@@ -97,6 +101,59 @@ function getVente($id=null, $DONNErecherche = array()) {
 
         return $req->fetch();
 
+    } elseif (!empty($DONNErecherche)) {
+        $params = array(1); // Start with etat=1 parameter
+        $recherche = "";
+        
+        if (!empty($DONNErecherche['nom_p_client'])) {
+            // Split the search term into parts
+            $search_terms = explode(' ', trim($DONNErecherche['nom_p_client']));
+            
+            if (count($search_terms) > 1) {
+                // If there are multiple terms, handle them separately
+                $recherche .= " AND (";
+                
+                // Option 1: First term matches nom, second term matches prenom (San(nom) Salvador(prenom))
+                $recherche .= "(c.nom LIKE ? AND c.prenom LIKE ?)";
+                $params[] = '%' . $search_terms[0] . '%';
+                $params[] = '%' . $search_terms[1] . '%';
+                
+                // Option 2: First term matches prenom, second term matches nom (Salvador(prenom) San(nom))
+                $recherche .= " OR (c.prenom LIKE ? AND c.nom LIKE ?)";
+                $params[] = '%' . $search_terms[0] . '%';
+                $params[] = '%' . $search_terms[1] . '%';
+                
+                // Option 3: Full search term matches either field (San Salvador(nom) San Salvador(prenom))
+                $recherche .= " OR c.nom LIKE ? OR c.prenom LIKE ?";
+                $params[] = '%' . $DONNErecherche['nom_p_client'] . '%';
+                $params[] = '%' . $DONNErecherche['nom_p_client'] . '%';
+                
+                $recherche .= ")";
+            } else {
+                // Single search term, keep original logic (if there is only 1 term)
+                $recherche .= " AND (c.nom LIKE ? OR c.prenom LIKE ?) ";
+                $params[] = '%' . $DONNErecherche['nom_p_client'] . '%';
+                $params[] = '%' . $DONNErecherche['nom_p_client'] . '%';
+            }
+        }
+        
+        if (!empty($DONNErecherche['montant'])) {
+            $recherche .= " AND v.total = ? ";
+            $params[] = floatval($DONNErecherche['montant']);
+        }
+        
+        if (!empty($DONNErecherche['date'])) {
+            $recherche .= " AND DATE(v.date_vente) = ? ";
+            $params[] = $DONNErecherche['date'];
+        }
+        
+        $sql = "SELECT v.id, nom, prenom, total, date_vente
+                FROM client AS c, vente AS v
+                WHERE v.id_client = c.id AND v.etat = ?" . $recherche;
+        
+        $req = $GLOBALS["connexion"]->prepare($sql);
+        $req->execute($params);
+        return $req->fetchAll();
     } else {   
         $sql = "SELECT v.id, nom, prenom, total, date_vente
                 FROM client AS c, vente AS v WHERE v.id_client=c.id AND v.etat=?";
@@ -147,7 +204,7 @@ function getFournisseur($id=null, $DONNErecherche = array()) {
     
 }
 
-function getAchat($id=null) {
+function getAchat($id=null, $DONNErecherche = array()) {
     if (!empty($id)) {
         $sql = "SELECT a.id, nom, prenom, total, date_achat, adresse, telephone
          FROM fournisseur AS f, achat AS a WHERE a.id_fournisseur=f.id AND a.id=? AND a.etat=?";
@@ -158,6 +215,59 @@ function getAchat($id=null) {
 
         return $req->fetch();
 
+    } elseif (!empty($DONNErecherche)) {
+        $params = array(1); // Start with etat=1 parameter
+        $recherche = "";
+        
+        if (!empty($DONNErecherche['nom_p_fournisseur'])) {
+            // Split the search term into parts
+            $search_terms = explode(' ', trim($DONNErecherche['nom_p_fournisseur']));
+            
+            if (count($search_terms) > 1) {
+                // If there are multiple terms, handle them separately
+                $recherche .= " AND (";
+                
+                // Option 1: First term matches nom, second term matches prenom (San(nom) Salvador(prenom))
+                $recherche .= "(f.nom LIKE ? AND f.prenom LIKE ?)";
+                $params[] = '%' . $search_terms[0] . '%';
+                $params[] = '%' . $search_terms[1] . '%';
+                
+                // Option 2: First term matches prenom, second term matches nom (Salvador(prenom) San(nom))
+                $recherche .= " OR (f.prenom LIKE ? AND f.nom LIKE ?)";
+                $params[] = '%' . $search_terms[0] . '%';
+                $params[] = '%' . $search_terms[1] . '%';
+                
+                // Option 3: Full search term matches either field (San Salvador(nom) San Salvador(prenom))
+                $recherche .= " OR f.nom LIKE ? OR f.prenom LIKE ?";
+                $params[] = '%' . $DONNErecherche['nom_p_fournisseur'] . '%';
+                $params[] = '%' . $DONNErecherche['nom_p_fournisseur'] . '%';
+                
+                $recherche .= ")";
+            } else {
+                // Single search term, keep original logic (if there is only 1 term)
+                $recherche .= " AND (f.nom LIKE ? OR f.prenom LIKE ?) ";
+                $params[] = '%' . $DONNErecherche['nom_p_fournisseur'] . '%';
+                $params[] = '%' . $DONNErecherche['nom_p_fournisseur'] . '%';
+            }
+        }
+        
+        if (!empty($DONNErecherche['montant'])) {
+            $recherche .= " AND a.total = ? ";
+            $params[] = floatval($DONNErecherche['montant']);
+        }
+        
+        if (!empty($DONNErecherche['date'])) {
+            $recherche .= " AND DATE(a.date_achat) = ? ";
+            $params[] = $DONNErecherche['date'];
+        }
+        
+        $sql = "SELECT a.id, nom, prenom, total, date_achat
+                FROM fournisseur AS f, achat AS a
+                WHERE a.id_fournisseur = f.id AND a.etat = ?" . $recherche;
+        
+        $req = $GLOBALS["connexion"]->prepare($sql);
+        $req->execute($params);
+        return $req->fetchAll();
     } else {
         $sql = "SELECT a.id, nom, prenom, total, date_achat
                 FROM fournisseur AS f, achat AS a WHERE a.id_fournisseur=f.id AND a.etat=?";
