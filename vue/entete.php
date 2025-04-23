@@ -39,9 +39,21 @@
           </a>
         </li>
         <li>
+          <a href="article.php" class="<?php echo basename($_SERVER["PHP_SELF"])=="article.php" ? "active" : "" ?>">
+            <i class="bx bx-box"></i>
+            <span class="links_name">Article</span>
+          </a>
+        </li>
+        <li>
           <a href="vente.php" class="<?php echo basename($_SERVER["PHP_SELF"])=="vente.php" ? "active" : "" ?>">
           <i class="bx bx-shopping-bag"></i>
             <span class="links_name">Vente</span>
+          </a>
+        </li>
+        <li>
+          <a href="achat.php" class="<?php echo basename($_SERVER["PHP_SELF"])=="achat.php" ? "active" : "" ?>">
+            <i class="bx bx-list-ul"></i>
+            <span class="links_name">Achat</span>
           </a>
         </li>
         <li>
@@ -51,21 +63,9 @@
           </a>
         </li>
         <li>
-          <a href="article.php" class="<?php echo basename($_SERVER["PHP_SELF"])=="article.php" ? "active" : "" ?>">
-            <i class="bx bx-box"></i>
-            <span class="links_name">Article</span>
-          </a>
-        </li>
-        <li>
           <a href="fournisseur.php" class="<?php echo basename($_SERVER["PHP_SELF"])=="fournisseur.php" ? "active" : "" ?>">
             <i class="bx bx-user"></i>
             <span class="links_name">Fournisseur</span>
-          </a>
-        </li>
-        <li>
-          <a href="achat.php" class="<?php echo basename($_SERVER["PHP_SELF"])=="achat.php" ? "active" : "" ?>">
-            <i class="bx bx-list-ul"></i>
-            <span class="links_name">Achat</span>
           </a>
         </li>
         <li>
