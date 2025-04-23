@@ -151,7 +151,10 @@
                         <td><?=number_format($value["prix_achat_unitaire"],2,".","")?></td>
                         <td><?=date("d/m/Y H:i:s",strtotime($value["date_fabrication"]))?></td>
                         <td><?=date("d/m/Y H:i:s",strtotime($value["date_expiration"]))?></td>
-                        <td><a href="?id=<?=$value["id"]?>" style="color: blue !important;"><i class='bx bx-edit-alt'></i></a></td>
+                        <td>
+                            <a href="?id=<?=$value["id"]?>" style="color: blue !important;"><i class='bx bx-edit-alt'></i></a>
+                            <a onclick="supprimeArticle(<?= $value['id']?>)" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
+                        </td>
                     </tr>    
                 <?php
                     }
@@ -167,3 +170,12 @@
 <?php 
     include("pied.php");
 ?>
+
+<script>
+    function supprimeArticle(idArticle) {
+
+    if (confirm("Voulez-vous vraiment supprimer ce article?")) {
+        window.location.href = `../model/supprimeArticle.php?idArticle=${idArticle}`;
+    }
+}
+</script>

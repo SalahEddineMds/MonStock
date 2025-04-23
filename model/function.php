@@ -8,11 +8,11 @@ function getArticle($id=null, $DONNErecherche = array()) {
     if (!empty($id)) {
         $sql = "SELECT nom_article, libelle_categorie, quantite, prix_vente_unitaire, prix_achat_unitaire, date_fabrication,
         date_expiration, id_categorie, a.id FROM article AS a, categorie_article AS c
-        WHERE a.id_categorie = c.id AND a.id=?";
+        WHERE a.id_categorie = c.id AND a.id=? AND a.etat=?";
 
         $req = $GLOBALS["connexion"]->prepare($sql);
 
-        $req->execute(array($id));
+        $req->execute(array($id,1));
 
         return $req->fetch();
 
@@ -41,11 +41,11 @@ function getArticle($id=null, $DONNErecherche = array()) {
     } else {
         $sql = "SELECT nom_article, libelle_categorie, quantite, prix_vente_unitaire, prix_achat_unitaire, date_fabrication,
         date_expiration, id_categorie, a.id FROM article AS a, categorie_article AS c
-        WHERE a.id_categorie = c.id";
+        WHERE a.id_categorie = c.id AND a.etat=?";
 
         $req = $GLOBALS["connexion"]->prepare($sql);
 
-        $req->execute();
+        $req->execute(array(1));
 
         return $req->fetchAll();
     }
