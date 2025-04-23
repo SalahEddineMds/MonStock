@@ -119,7 +119,7 @@
                             <td>
                                 <a href="recuAchat.php?id=<?= $value["id"]?>" title="Afficher le Reçu" style="color: blue !important;"><i class='bx bx-receipt'></i></a>
                                 <a href="achat.php?id_achat=<?=$value['id']?>" title="Ajouter à Achat" style="color: blue !important;"><i class='bx bx-plus'></i></a>
-                                <a onclick="annuleAchat(<?= $value['id']?>)" title="Annuler cette Achat" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
+                                <a onclick="annuleAchat(<?= $value['id']?>)" title="Annuler" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
                             </td>
 
                         </tr>    

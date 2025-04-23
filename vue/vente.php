@@ -123,7 +123,7 @@
                             <td>
                                 <a href="recuVente.php?id=<?= $value["id"]?>" title="Afficher le Reçu" style="color: blue !important;"><i class='bx bx-receipt'></i></a>
                                 <a href="vente.php?id_vente=<?=$value['id']?>" title="Ajouter à Vente" style="color: blue !important;"><i class='bx bx-plus'></i></a>
-                                <a onclick="annuleVente(<?= $value['id']?>)" title="Supprimer cette Vente" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
+                                <a onclick="annuleVente(<?= $value['id']?>)" title="Annuler" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
                             </td>
 
                         </tr>    
