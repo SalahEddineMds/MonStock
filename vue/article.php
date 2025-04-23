@@ -17,6 +17,7 @@
 
                 <label for="id_categorie">Catégorie</label>
                 <select name="id_categorie" id="id_categorie" class="tom-select">
+                    <option value="" disabled selected>Choisir une Catégorie</option>
                     <?php 
                     $categories = getCategorie();
                     if (!empty($categories) && is_array($categories)) {
@@ -80,7 +81,7 @@
                         </td>
                         <td>
                             <select name="id_categorie" id="id_categorie" class="tom-select">
-                                <option value="">---Choisir---</option>
+                                <option value="" disabled selected>---Choisir---</option>
                                 <?php 
                                 $categories = getCategorie();
                                 if (!empty($categories) && is_array($categories)) {

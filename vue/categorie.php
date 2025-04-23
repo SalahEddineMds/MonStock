@@ -10,7 +10,7 @@
     <div class="overview-boxes">
         <div class="vabox">
             <form action=" <?= !empty($_GET["id"]) ? "../model/modifCategorie.php" : "../model/ajoutCategorie.php" ?>" method="post">
-                <h3><?= !empty($_GET["id"]) ? "Modifier Catégorie" : "Ajouter un Catégorie" ?></h3>
+                <h3><?= !empty($_GET["id"]) ? "Modifier Catégorie" : "Ajouter une Catégorie" ?></h3>
                 <label for="libelle_categorie">Libellé</label>
                 <input value="<?= !empty($_GET["id"]) ? $categorie["libelle_categorie"] : "" ?>" type="text" name="libelle_categorie" id="libelle_categorie" placeholder="Veuillez saisir le nom">
                 <input value="<?= !empty($_GET["id"]) ? $categorie["id"] : "" ?>" type="hidden" name="id" id="id">

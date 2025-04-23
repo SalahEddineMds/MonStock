@@ -33,6 +33,7 @@
                         <input type="hidden" name="id_achat" value="<?= $_GET['id_achat'] ?>">
                         <label for="id_article">Article</label>
                         <select onchange="setPrix()" name="id_article" id="id_article" class="tom-select">
+                            <option value="" disabled selected>Choisir un article</option>
                             <?php 
                                 $articles = getArticle();
                                 if (!empty($articles) && is_array($articles)) {
@@ -116,8 +117,9 @@
                             <td><?=number_format($value["total"],2,".","")?></td>
                             <td><?=date("d/m/Y H:i:s", strtotime($value["date_achat"]))?></td>
                             <td>
-                                <a href="recuAchat.php?id=<?= $value["id"]?>" style="color: blue !important;"><i class='bx bx-receipt'></i></a>
-                                <a onclick="annuleAchat(<?= $value['id']?>) "style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
+                                <a href="recuAchat.php?id=<?= $value["id"]?>" title="Afficher le Reçu" style="color: blue !important;"><i class='bx bx-receipt'></i></a>
+                                <a href="achat.php?id_achat=<?=$value['id']?>" title="Ajouter à Achat" style="color: blue !important;"><i class='bx bx-plus'></i></a>
+                                <a onclick="annuleAchat(<?= $value['id']?>)" title="Annuler cette Achat" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
                             </td>
 
                         </tr>    
