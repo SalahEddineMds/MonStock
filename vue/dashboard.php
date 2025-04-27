@@ -89,7 +89,6 @@
               ?>
               <li>
                 <a href="article.php">
-                  <!--<img src="images/sunglasses.jpg" alt="">-->
                   <span class="product"><?php echo $value["nom_article"] ?></span>
                 </a>
                 <span class="price"><?php echo number_format($value["prix"])." DZD"?></span>

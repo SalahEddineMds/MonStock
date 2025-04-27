@@ -152,7 +152,7 @@
                         <td><?=date("d/m/Y H:i:s",strtotime($value["date_fabrication"]))?></td>
                         <td><?=date("d/m/Y H:i:s",strtotime($value["date_expiration"]))?></td>
                         <td>
-                            <a href="?id=<?=$value["id"]?>" title="Modifier" tyle="color: blue !important;"><i class='bx bx-edit-alt'></i></a>
+                            <a href="?id=<?=$value["id"]?>" title="Modifier" style="color: blue !important;"><i class='bx bx-edit-alt'></i></a>
                             <a onclick="supprimeArticle(<?= $value['id']?>)" title="Supprimer" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
                         </td>
                     </tr>    

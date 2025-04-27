@@ -293,6 +293,12 @@ nav .profile-details i {
   font-size: 400;
   text-decoration: none;
 }
+.sales-details li a:hover {
+  color: #000;
+  font-size: 19px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
 .sales-boxes .box .button {
   width: 100%;
   display: flex;
@@ -326,14 +332,6 @@ nav .profile-details i {
   align-items: center;
   justify-content: space-between;
   margin: 10px 0;
-}
-.sales-boxes .top-sales li a img {
-  height: 40px;
-  width: 40px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-right: 10px;
-  background: #333;
 }
 .sales-boxes .top-sales li a {
   display: flex;
