@@ -106,14 +106,14 @@
                         } else {
                         ?>
                         <tr>
-                            <td colspan="5" style="text-align: center;">Aucun article dans cette vente</td>
+                            <td colspan="5" style="text-align: center;">Aucun article dans cette achat</td>
                         </tr>
                         <?php
                         }
                         ?>
                     </table>
                     <div style="margin-top: 20px; text-align: right; padding-right: 20px;">
-                        <strong>Total de la vente: <?= number_format($total_achat, 2) ?></strong>
+                        <strong>Total de l'achat: <?= number_format($total_achat, 2) ?> DZD</strong>
                     </div>
                 </div>
             </div>

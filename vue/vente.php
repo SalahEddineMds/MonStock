@@ -115,7 +115,7 @@
                         ?>
                     </table>
                     <div style="margin-top: 20px; text-align: right; padding-right: 20px;">
-                        <strong>Total de la vente: <?= number_format($total_vente, 2) ?></strong>
+                        <strong>Total de la vente: <?= number_format($total_vente, 2) ?> DZD</strong>
                     </div>
                 </div>
             </div>
