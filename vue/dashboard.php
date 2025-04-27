@@ -6,7 +6,7 @@
         <div class="overview-boxes">
           <div class="box">
             <div class="right-side">
-              <div class="box-topic">Achat</div>
+              <div class="box-topic">Achats</div>
               <div class="number"> <?php echo getAllAchat()["nbre"] ?> </div>
               
             </div>
@@ -14,7 +14,7 @@
           </div>
           <div class="box">
             <div class="right-side">
-              <div class="box-topic">Vente</div>
+              <div class="box-topic">Ventes</div>
               <div class="number"><?php echo getAllVente()["nbre"] ?></div>
               
             </div>
@@ -22,7 +22,7 @@
           </div>
           <div class="box <?= LowStock() ? 'alert-low-stock tooltip' : '' ?>" <?= LowStock() ? 'data-tooltip="Stock Faible"' : '' ?>>
             <div class="right-side">
-              <div class="box-topic">Article</div>
+              <div class="box-topic">Articles</div>
               <div class="number"><?php echo getAllArticle()["nbre"] ?></div>
               
             </div>
@@ -31,7 +31,7 @@
           <div class="box">
             <div class="right-side">
               <div class="box-topic">Chiffre d'affaire</div>
-              <div class="number"><?php echo number_format(getCA()["total"]). " DZD" ?></div>
+              <div class="number"><?php echo (getCA()["total"] !== null ? number_format(getCA()["total"]) : "0") . " DZD" ?></div>
               
             </div>
             <i class="bx bxs-cart-download cart four"></i>
