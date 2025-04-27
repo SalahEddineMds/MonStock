@@ -9,7 +9,8 @@
 <div class="home-content">
     <?php if (empty($_GET["id_vente"])): ?>
         <button onclick="createNewVente()" class="valider" style="margin-left: 25px; margin-bottom: 5px;">Nouveau Vente</button>
-    <?php endif; ?>    <div class="overview-boxes">
+    <?php endif; ?>    
+    <div class="overview-boxes">
         <div class="va-container">
 
             <?php if (!empty($_GET["id_vente"])): ?>
@@ -71,7 +72,54 @@
                     </form>
                 </div>
             </div>
-            <?php endif; ?>
+
+            <div style="display: block;" class="box">
+                    <h3>Détails de la vente</h3>
+                    <table class="mtable">
+                        <tr>
+                            <th>Article</th>
+                            <th>Quantité</th>
+                            <th>Prix unitaire</th>
+                            <th>Prix total</th>
+                            <th>Action</th>
+                        </tr>
+                        <?php
+                        // Récupérer les lignes de la vente actuelle
+                        $lignes_vente = getVenteLignes($_GET["id_vente"]);
+                        $total_vente = 0;
+                        
+                        if (!empty($lignes_vente) && is_array($lignes_vente)) {
+                            foreach ($lignes_vente as $ligne) {
+                                $total_vente += $ligne["prix"];
+                                $prix_uni = $ligne["prix"] / $ligne["quantite"]
+                        ?>
+                        <tr>
+                            <td><?= $ligne["nom_article"] ?></td>
+                            <td><?= $ligne["quantite"] ?></td>
+                            <td><?= $prix_uni ?></td>
+                            <td><?= $ligne["prix"] ?></td>
+                            <td>
+                                <a onclick="modifierLigne(<?= $ligne['id'] ?>)" title="Modifier" style="color: blue !important; cursor: pointer;"><i class='bx bx-edit-alt'></i></a>
+                                <a onclick="supprimerLigne(<?= $ligne['id'] ?>, <?= $_GET['id_vente'] ?>)" title="Supprimer" style="color: red !important; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
+                            </td>
+                        </tr>
+                        <?php
+                            }
+                        } else {
+                        ?>
+                        <tr>
+                            <td colspan="5" style="text-align: center;">Aucun article dans cette vente</td>
+                        </tr>
+                        <?php
+                        }
+                        ?>
+                    </table>
+                    <div style="margin-top: 20px; text-align: right; padding-right: 20px;">
+                        <strong>Total de la vente: <?= number_format($total_vente, 2) ?></strong>
+                    </div>
+                </div>
+            </div>
+            <?php else: ?>
 
 
             <div style="display: block;" class="box">
@@ -122,7 +170,7 @@
                             <td><?=date("d/m/Y H:i:s", strtotime($value["date_vente"]))?></td>
                             <td>
                                 <a href="recuVente.php?id=<?= $value["id"]?>" title="Afficher le Reçu" style="color: blue !important;"><i class='bx bx-receipt'></i></a>
-                                <a href="vente.php?id_vente=<?=$value['id']?>" title="Ajouter à Vente" style="color: blue !important;"><i class='bx bx-plus'></i></a>
+                                <a href="vente.php?id_vente=<?=$value['id']?>" title="Modifier" style="color: blue !important;"><i class='bx bx-edit'></i></a>
                                 <a onclick="annuleVente(<?= $value['id']?>)" title="Annuler" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
                             </td>
 
@@ -134,6 +182,7 @@
                     ?>
                 </table>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -171,5 +220,11 @@
         var prix_u = article.options[article.selectedIndex].getAttribute("data-prix");
         document.querySelector("#prix_u").value = prix_u;
         setPrix();
+    }
+
+    function supprimerLigne(idLigne, idVente) {
+        if (confirm("Voulez-vous vraiment supprimer cette ligne?")) {
+            window.location.href = "../model/supprimerLigneVente.php?idLigne=" + idLigne + "&idVente=" + idVente;
+        }
     }
 </script>

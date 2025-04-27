@@ -7,9 +7,12 @@
 ?>
 
 <div class="home-content">
-    <button onclick="createNewAchat()" class="valider" style="margin-left: 25px; margin-bottom: 5px;">Nouveau Achat</button>
+    <?php if (empty($_GET["id_achat"])): ?>
+        <button onclick="createNewAchat()" class="valider" style="margin-left: 25px; margin-bottom: 5px;">Nouveau Achat</button>
+    <?php endif; ?>  
     <div class="overview-boxes">
-        <div class="va-container"> 
+        <div class="va-container">
+
             <?php if (!empty($_GET["id_achat"])): ?>
             <div class="vabox">
                 <form action="../model/ajoutFournisseurAchat.php" method="post" id="achat-form">
@@ -68,7 +71,53 @@
                     </form>    
                 </div>                  
             </div>
-            <?php endif; ?>
+            <div style="display: block;" class="box">
+                    <h3>Détails de l'achat</h3>
+                    <table class="mtable">
+                        <tr>
+                            <th>Article</th>
+                            <th>Quantité</th>
+                            <th>Prix unitaire</th>
+                            <th>Prix total</th>
+                            <th>Action</th>
+                        </tr>
+                        <?php
+                        // Récupérer les lignes de l'achat actuelle
+                        $lignes_achat = getAchatLignes($_GET["id_achat"]);
+                        $total_achat = 0;
+                        
+                        if (!empty($lignes_achat) && is_array($lignes_achat)) {
+                            foreach ($lignes_achat as $ligne) {
+                                $total_achat += $ligne["prix"];
+                                $prix_uni = $ligne["prix"] / $ligne["quantite"]
+                        ?>
+                        <tr>
+                            <td><?= $ligne["nom_article"] ?></td>
+                            <td><?= $ligne["quantite"] ?></td>
+                            <td><?= $prix_uni ?></td>
+                            <td><?= $ligne["prix"] ?></td>
+                            <td>
+                                <a onclick="modifierLigne(<?= $ligne['id'] ?>)" title="Modifier" style="color: blue !important; cursor: pointer;"><i class='bx bx-edit-alt'></i></a>
+                                <a onclick="supprimerLigne(<?= $ligne['id'] ?>, <?= $_GET['id_achat'] ?>)" title="Supprimer" style="color: red !important; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
+                            </td>
+                        </tr>
+                        <?php
+                            }
+                        } else {
+                        ?>
+                        <tr>
+                            <td colspan="5" style="text-align: center;">Aucun article dans cette vente</td>
+                        </tr>
+                        <?php
+                        }
+                        ?>
+                    </table>
+                    <div style="margin-top: 20px; text-align: right; padding-right: 20px;">
+                        <strong>Total de la vente: <?= number_format($total_achat, 2) ?></strong>
+                    </div>
+                </div>
+            </div>
+            <?php else: ?>
 
             <div style="display: block;" class="box">
                 <form action="" method="get">
@@ -118,7 +167,7 @@
                             <td><?=date("d/m/Y H:i:s", strtotime($value["date_achat"]))?></td>
                             <td>
                                 <a href="recuAchat.php?id=<?= $value["id"]?>" title="Afficher le Reçu" style="color: blue !important;"><i class='bx bx-receipt'></i></a>
-                                <a href="achat.php?id_achat=<?=$value['id']?>" title="Ajouter à Achat" style="color: blue !important;"><i class='bx bx-plus'></i></a>
+                                <a href="achat.php?id_achat=<?=$value['id']?>" title="Modifier" style="color: blue !important;"><i class='bx bx-edit'></i></a>
                                 <a onclick="annuleAchat(<?= $value['id']?>)" title="Annuler" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
                             </td>
 
@@ -130,6 +179,7 @@
                     ?>
                 </table>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -159,5 +209,11 @@
         var prix = document.querySelector("#prix");
 
         prix.value = Number(quantite.value) * Number(prix_u.value);
+    }
+
+    function supprimerLigne(idLigne, idAchat) {
+        if (confirm("Voulez-vous vraiment supprimer cette ligne?")) {
+            window.location.href = "../model/supprimerLigneAchat.php?idLigne=" + idLigne + "&idAchat=" + idAchat;
+        }
     }
 </script>
