@@ -40,7 +40,7 @@
 
         <div class="sales-boxes">
           <div class="recent-sales vabox">
-            <div class="title">Vente recentes</div>
+            <div class="title">Ventes recentes</div>
             <?php
               $ventes = getLastVente();
             ?>
@@ -81,7 +81,7 @@
             </div>
           </div>
           <div class="top-sales box">
-            <div class="title">Article le plus vendu</div>
+            <div class="title">Articles les plus vendus</div>
             <ul class="top-sales-details">
             <?php
               $article = getMostVente();
