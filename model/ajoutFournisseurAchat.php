@@ -19,6 +19,6 @@ if (!empty($_POST["id_fournisseur"]) && !empty($_POST["id_achat"])) {
     }
 }
 
-header("Location: ../vue/achat.php?id_achat=" . $id_achat);
+header("Location: ../vue/achat.php?");
 exit;
 ?>

@@ -20,7 +20,11 @@
             sortField: {
               field: "text",
               direction: "asc"
-            }
+            },
+              closeAfterSelect: true,  // Close dropdown after selection
+              onItemAdd: function() {
+                this.blur();  // Remove focus after item is selected
+              }
           });
         });
       });

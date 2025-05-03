@@ -13,175 +13,203 @@
     <div class="overview-boxes">
         <div class="va-container">
 
-            <?php if (!empty($_GET["id_achat"])): ?>
+        <?php if (!empty($_GET["id_achat"])): ?>
+        <div class="vabox">
+            <form action="../model/ajoutFournisseurAchat.php" method="post" id="achat-form" <?php echo (!empty($_GET["edit_ligne"])) ? 'style="display: none;"' : ''; ?>>
+                <input type="hidden" name="id_achat" value="<?= $_GET['id_achat'] ?>">
+                <label for="id_fournisseur">Fournisseur</label>
+                    <select name="id_fournisseur" id="id_fournisseur" class="tom-select">
+                    <?php 
+                        $fournisseurs = getFournisseur();
+                        if (!empty($fournisseurs) && is_array($fournisseurs)) {
+                            foreach ($fournisseurs as $key => $value) {
+                                $selected = (!empty($achat) && $achat["id_fournisseur"] == $value["id"]) ? "selected" : "";
+                                echo "<option value='{$value["id"]}' {$selected}>{$value["nom"]} {$value["prenom"]}</option>";
+                            }
+                        }
+                    ?>  
+                    </select>
+                    <button class="valider" type="submit">Valider Achat</button>
+            </form>
             <div class="vabox">
-                <form action="../model/ajoutFournisseurAchat.php" method="post" id="achat-form">
+                <form action="<?php echo (!empty($_GET["edit_ligne"])) ? '../model/modifAchatLigne.php' : '../model/ajoutArticleAchat.php'; ?>" method="post" id="article-form">
                     <input type="hidden" name="id_achat" value="<?= $_GET['id_achat'] ?>">
-                    <label for="id_fournisseur">Fournisseur</label>
-                        <select name="id_fournisseur" id="id_fournisseur" class="tom-select">
+
+                    <?php if (!empty($_GET["edit_ligne"])): 
+                        // Fetch the ligne data for editing
+                        $lignes = getAchatLignes($_GET["id_achat"]);
+                        $edit_ligne = null;
+                        foreach ($lignes as $ligne) {
+                            if ($ligne["id"] == $_GET["edit_ligne"]) {
+                                $edit_ligne = $ligne;
+                                break;
+                            }
+                        }
+                        if ($edit_ligne): 
+                    ?>
+                    <input type="hidden" name="id_ligne" value="<?= $edit_ligne["id"] ?>">
+                    <?php endif; endif; ?>
+
+                    <label for="id_article">Article</label>
+                    <select onchange="remplirPrix()" name="id_article" id="id_article" class="tom-select">
+                        <option value="" disabled <?php echo (empty($_GET["edit_ligne"]) || empty($edit_ligne)) ? 'selected' : ''; ?>>Choisir un article</option>
                         <?php 
-                            $fournisseurs = getFournisseur();
-                            if (!empty($fournisseurs) && is_array($fournisseurs)) {
-                                foreach ($fournisseurs as $key => $value) {
-                                    $selected = (!empty($achat) && $achat["id_fournisseur"] == $value["id"]) ? "selected" : "";
-                                    echo "<option value='{$value["id"]}' {$selected}>{$value["nom"]} {$value["prenom"]}</option>";
+                            $articles = getArticle();
+                            if (!empty($articles) && is_array($articles)) {
+                                foreach ($articles as $key => $value) {
+                                    // Check if we're in edit mode and this is the selected article
+                                    $selected = (!empty($edit_ligne) && $edit_ligne["id_article"] == $value["id"]) ? 'selected' : '';
+                                    echo "<option data-prix='{$value["prix_achat_unitaire"]}' value='{$value["id"]}' {$selected}>{$value["nom_article"]} - {$value["quantite"]} disponible</option>";                                   
                                 }
                             }
-                        ?>  
-                        </select>
-                        <button class="valider" type="submit">Valider Achat</button>
-                </form>
-                <div class="vabox">
-                    <form action="../model/ajoutArticleAchat.php" method="post" id="article-form">
-                        <input type="hidden" name="id_achat" value="<?= $_GET['id_achat'] ?>">
-                        <label for="id_article">Article</label>
-                        <select onchange="setPrix()" name="id_article" id="id_article" class="tom-select">
-                            <option value="" disabled selected>Choisir un article</option>
-                            <?php 
-                                $articles = getArticle();
-                                if (!empty($articles) && is_array($articles)) {
-                                    foreach ($articles as $key => $value) {
-                                        echo "<option data-prix='{$value["prix_achat_unitaire"]}' value='{$value["id"]}'>{$value["nom_article"]} - {$value["quantite"]} disponible</option>";                                   
-                                    }
-                                }
-                            ?> 
-                        </select>
+                        ?> 
+                    </select>
 
-                        <label for="quantite">Quantité</label>
-                        <input onkeyup="setPrix()" type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="1">
+                    <label for="quantite">Quantité</label>
+                    <input onkeyup="setPrix()" type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="1" value="<?php echo (!empty($edit_ligne)) ? $edit_ligne["quantite"] : ''; ?>">
 
-                        <label for="prix_u">Prix unitaire</label>
-                        <input onkeyup="setPrix()" type="number" name="prix_u" id="prix_u" placeholder="Veuillez saisir le prix unitaire" min="0" step="any">
+                    <label for="prix_u">Prix unitaire</label>
+                    <input onkeyup="setPrix()" type="number" name="prix_u" id="prix_u" placeholder="Veuillez saisir le prix unitaire" min="0" step="any" value="<?php echo (!empty($edit_ligne)) ? ($edit_ligne["prix"] / $edit_ligne["quantite"]) : ''; ?>">
 
-                        <label for="prix">Prix total</label>
-                        <input type="number" name="prix" id="prix" placeholder="Prix total" min="0" step="any" readonly>
+                    <label for="prix">Prix total</label>
+                    <input type="number" name="prix" id="prix" placeholder="Prix total" min="0" step="any" value="<?php echo (!empty($edit_ligne)) ? $edit_ligne["prix"] : ''; ?>">
 
-                        <button type="submit">Ajouter</button>
+                    <button type="submit"><?php echo (!empty($_GET["edit_ligne"])) ? 'Modifier' : 'Ajouter'; ?></button>
+                    <?php if (!empty($_GET["edit_ligne"])): ?>
+                        <button type="button" onclick="window.location.href='achat.php?id_achat=<?= $_GET['id_achat'] ?>'" class="valider">Annuler</button>
+                    <?php endif; ?>
 
-                        <?php
-                        if (!empty($_SESSION["message"]["text"])) {
-                        ?>
-                            <div class="alert <?=$_SESSION["message"]["type"]?>">
-                                <?=$_SESSION["message"]["text"]?>
-                            </div>
-                        <?php 
-                        unset($_SESSION["message"]); // Efface le message après affichage
+                    <?php
+                    if (!empty($_SESSION["message"]["text"])) {
+                    ?>
+                        <div class="alert <?=$_SESSION["message"]["type"]?>">
+                            <?=$_SESSION["message"]["text"]?>
+                        </div>
+                    <?php 
+                    unset($_SESSION["message"]); // Efface le message après affichage
+                    }
+                    ?>
+                </form>    
+            </div>                  
+        </div>
+        <div style="display: block;" class="box">
+                <h3>Détails de l'achat</h3>
+                <table class="mtable">
+                    <tr>
+                        <th>Article</th>
+                        <th>Quantité</th>
+                        <th>Prix unitaire</th>
+                        <th>Prix total</th>
+                        <th>Action</th>
+                    </tr>
+                    <?php
+                    // Récupérer les lignes de l'achat actuelle
+                    $lignes_achat = getAchatLignes($_GET["id_achat"]);
+                    $total_achat = 0;
+                    
+                    if (!empty($lignes_achat) && is_array($lignes_achat)) {
+                        foreach ($lignes_achat as $ligne) {
+                            $total_achat += $ligne["prix"];
+                            $prix_uni = $ligne["prix"] / $ligne["quantite"]
+                    ?>
+                    <tr>
+                        <td><?= $ligne["nom_article"] ?></td>
+                        <td><?= $ligne["quantite"] ?></td>
+                        <td><?= $prix_uni ?></td>
+                        <td><?= $ligne["prix"] ?></td>
+                        <td>
+                            <a href="achat.php?id_achat=<?= $_GET['id_achat'] ?>&edit_ligne=<?= $ligne['id'] ?>" title="Modifier" style="color: blue !important; cursor: pointer;"><i class='bx bx-edit-alt'></i></a>
+                            <a onclick="supprimerLigne(<?= $ligne['id'] ?>, <?= $_GET['id_achat'] ?>)" title="Supprimer" style="color: red !important; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
+                        </td>
+                    </tr>
+                    <?php
                         }
-                        ?>
-                    </form>    
-                </div>                  
-            </div>
-            <div style="display: block;" class="box">
-                    <h3>Détails de l'achat</h3>
-                    <table class="mtable">
-                        <tr>
-                            <th>Article</th>
-                            <th>Quantité</th>
-                            <th>Prix unitaire</th>
-                            <th>Prix total</th>
-                            <th>Action</th>
-                        </tr>
-                        <?php
-                        // Récupérer les lignes de l'achat actuelle
-                        $lignes_achat = getAchatLignes($_GET["id_achat"]);
-                        $total_achat = 0;
-                        
-                        if (!empty($lignes_achat) && is_array($lignes_achat)) {
-                            foreach ($lignes_achat as $ligne) {
-                                $total_achat += $ligne["prix"];
-                                $prix_uni = $ligne["prix"] / $ligne["quantite"]
-                        ?>
-                        <tr>
-                            <td><?= $ligne["nom_article"] ?></td>
-                            <td><?= $ligne["quantite"] ?></td>
-                            <td><?= $prix_uni ?></td>
-                            <td><?= $ligne["prix"] ?></td>
-                            <td>
-                                <a onclick="modifierLigne(<?= $ligne['id'] ?>)" title="Modifier" style="color: blue !important; cursor: pointer;"><i class='bx bx-edit-alt'></i></a>
-                                <a onclick="supprimerLigne(<?= $ligne['id'] ?>, <?= $_GET['id_achat'] ?>)" title="Supprimer" style="color: red !important; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
-                            </td>
-                        </tr>
-                        <?php
-                            }
-                        } else {
-                        ?>
-                        <tr>
-                            <td colspan="5" style="text-align: center;">Aucun article dans cette achat</td>
-                        </tr>
-                        <?php
-                        }
-                        ?>
-                    </table>
-                    <div style="margin-top: 20px; text-align: right; padding-right: 20px;">
-                        <strong>Total de l'achat: <?= number_format($total_achat, 2) ?> DZD</strong>
-                    </div>
+                    } else {
+                    ?>
+                    <tr>
+                        <td colspan="5" style="text-align: center;">Aucun article dans cette achat</td>
+                    </tr>
+                    <?php
+                    }
+                    ?>
+                </table>
+                <div style="margin-top: 20px; text-align: right; padding-right: 20px;">
+                    <strong>Total de l'achat: <?= number_format($total_achat, 2) ?> DZD</strong>
                 </div>
             </div>
-            <?php else: ?>
+        </div>
+        <?php else: ?>
 
-            <div style="display: block;" class="box">
-                <form action="" method="get">
-                    <table class="mtable">
-                        <tr>
-                            <th>Fournisseur</th>
-                            <th>Montant</th>
-                            <th>Date</th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="text" name="nom_p_fournisseur" id="nom_p_fournisseur" placeholder="Veuillez saisir le nom ou prenom">
-                            </td>
-                            <td>
-                                <input type="number" name="montant" id="montant" placeholder="Veuillez saisir le montant" min="0" step="any">
-                            </td>
-                            <td>
-                                <input type="date" name="date" id="date">
-                            </td>
-                        </tr>
-                    </table>
-                    <br>
-                    <button type="submit">Recherche</button>
-                </form>
-                <br>
-
+        <div style="display: block;" class="box">
+            <form action="" method="get">
                 <table class="mtable">
                     <tr>
                         <th>Fournisseur</th>
                         <th>Montant</th>
                         <th>Date</th>
-                        <th>Action</th>
                     </tr>
-                    <?php
-                    if (!empty($_GET)) {
-                        $achats = getAchat(null, $_GET);
-                    } else {
-                        $achats = getAchat();
-                    }
-                    if (!empty($achats) && is_array( $achats )) {
-                        foreach ($achats as $key => $value) {
-                            if ($value["total"] > 0) {
-                        ?>
-                        <tr>
-                            <td><?=$value["nom"]. " ".$value["prenom"] ?></td>
-                            <td><?=number_format($value["total"],2,".","")?></td>
-                            <td><?=date("d/m/Y H:i:s", strtotime($value["date_achat"]))?></td>
-                            <td>
-                                <a href="recuAchat.php?id=<?= $value["id"]?>" title="Afficher le Reçu" style="color: blue !important;"><i class='bx bx-receipt'></i></a>
-                                <a href="achat.php?id_achat=<?=$value['id']?>" title="Modifier" style="color: blue !important;"><i class='bx bx-edit'></i></a>
-                                <a onclick="annuleAchat(<?= $value['id']?>)" title="Annuler" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
-                            </td>
+                    <tr>
+                        <td>
+                            <input type="text" name="nom_p_fournisseur" id="nom_p_fournisseur" placeholder="Veuillez saisir le nom ou prenom">
+                        </td>
+                        <td>
+                            <input type="number" name="montant" id="montant" placeholder="Veuillez saisir le montant" min="0" step="any">
+                        </td>
+                        <td>
+                            <input type="date" name="date" id="date">
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <button type="submit">Recherche</button>
+            </form>
+            <br>
 
-                        </tr>    
-                    <?php
-                            }
+            <table class="mtable">
+                <tr>
+                    <th>Fournisseur</th>
+                    <th>Montant</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+                <?php
+                if (!empty($_GET)) {
+                    $achats = getAchat(null, $_GET);
+                } else {
+                    $achats = getAchat();
+                }
+                if (!empty($achats) && is_array( $achats )) {
+                    foreach ($achats as $key => $value) {
+                        if ($value["total"] > 0) {
+                    ?>
+                    <tr>
+                        <td><?=$value["nom"]. " ".$value["prenom"] ?></td>
+                        <td><?=number_format($value["total"],2,".","")?></td>
+                        <td><?=date("d/m/Y H:i:s", strtotime($value["date_achat"]))?></td>
+                        <td>
+                            <a href="recuAchat.php?id=<?= $value["id"]?>" title="Afficher le Reçu" style="color: blue !important;"><i class='bx bx-receipt'></i></a>
+                            <a href="achat.php?id_achat=<?=$value['id']?>" title="Modifier" style="color: blue !important;"><i class='bx bx-edit'></i></a>
+                            <a onclick="annuleAchat(<?= $value['id']?>)" title="Annuler" style="color: red; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
+                        </td>
+
+                    </tr>    
+                <?php
                         }
                     }
-                    ?>
-                </table>
-            </div>
-            <?php endif; ?>
+                } else {
+                ?>
+                    <tr>
+                        <td colspan="5" style="text-align: center;">Aucun achat</td>
+                    </tr>
+                <?php
+                }
+                ?>
+            </table>
         </div>
+        <?php endif; ?>
     </div>
+</div>
+
 </div>
 
 </section>
@@ -202,7 +230,6 @@
         }
     }
 
-
     function setPrix() {
         var quantite = document.querySelector("#quantite");
         var prix_u = document.querySelector("#prix_u");
@@ -211,9 +238,24 @@
         prix.value = Number(quantite.value) * Number(prix_u.value);
     }
 
+    function remplirPrix() {
+        var article = document.querySelector("#id_article")
+        var prix_u = article.options[article.selectedIndex].getAttribute("data-prix");
+        document.querySelector("#prix_u").value = prix_u;
+        setPrix();
+    }
+
     function supprimerLigne(idLigne, idAchat) {
         if (confirm("Voulez-vous vraiment supprimer cette ligne?")) {
             window.location.href = "../model/supprimerLigneAchat.php?idLigne=" + idLigne + "&idAchat=" + idAchat;
         }
     }
+
+    // Ensure the price is properly calculated when the page loads (for edit mode)
+    window.onload = function() {
+        var quantiteField = document.getElementById('quantite');
+        if (quantiteField && quantiteField.value !== '') {
+            setPrix();
+        }
+    };
 </script>

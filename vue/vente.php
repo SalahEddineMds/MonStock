@@ -15,7 +15,7 @@
 
             <?php if (!empty($_GET["id_vente"])): ?>
             <div class="vabox">
-                <form action="../model/ajoutClientVente.php" method="post" id="vente-form">
+                <form action="../model/ajoutClientVente.php" method="post" id="vente-form" <?php echo (!empty($_GET["edit_ligne"])) ? 'style="display: none;"' : ''; ?>>
                     <input type="hidden" name="id_vente" value="<?= $_GET['id_vente'] ?>">
                     <label for="id_client">Client</label>
                     <select name="id_client" id="id_client" class="tom-select">
@@ -33,32 +33,53 @@
                 </form>
 
                 <div class="vabox">
-                    <form action="../model/ajoutArticleVente.php" method="post" id="article-form">
+                    <form action="<?php echo (!empty($_GET["edit_ligne"])) ? '../model/modifVenteLigne.php' : '../model/ajoutArticleVente.php'; ?>" method="post" id="article-form">
                         <input type="hidden" name="id_vente" value="<?= $_GET['id_vente'] ?>">
+
+                        <?php if (!empty($_GET["edit_ligne"])): 
+                            // Fetch the ligne data for editing
+                            $lignes = getVenteLignes($_GET["id_vente"]);
+                            $edit_ligne = null;
+                            foreach ($lignes as $ligne) {
+                                if ($ligne["id"] == $_GET["edit_ligne"]) {
+                                    $edit_ligne = $ligne;
+                                    break;
+                                }
+                            }
+                            if ($edit_ligne): 
+                        ?>
+                        <input type="hidden" name="id_ligne" value="<?= $edit_ligne["id"] ?>">
+                        <?php endif; endif; ?>
+
                         <label for="id_article">Article</label>
                         <select onchange="remplirPrix()" name="id_article" id="id_article" class="tom-select">
-                            <option value="" disabled selected>Choisir un article</option>
+                            <option value="" disabled <?php echo (empty($_GET["edit_ligne"]) || empty($edit_ligne)) ? 'selected' : ''; ?>>Choisir un article</option>
                             <?php 
                                 $articles = getArticle();
                                 if (!empty($articles) && is_array($articles)) {
                                     foreach ($articles as $key => $value) {
-                                        echo "<option data-prix='{$value["prix_vente_unitaire"]}' value='{$value["id"]}'>{$value["nom_article"]} - {$value["quantite"]} disponible</option>";                                   
+                                        // Check if we're in edit mode and this is the selected article
+                                        $selected = (!empty($edit_ligne) && $edit_ligne["id_article"] == $value["id"]) ? 'selected' : '';
+                                        echo "<option data-prix='{$value["prix_vente_unitaire"]}' value='{$value["id"]}' {$selected}>{$value["nom_article"]} - {$value["quantite"]} disponible</option>";                                   
                                     }
                                 }
                             ?>  
                         </select>
 
                         <label for="quantite">Quantité</label>
-                        <input onkeyup="setPrix()" type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="1">
+                        <input onkeyup="setPrix()" type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="1" value="<?php echo (!empty($edit_ligne)) ? $edit_ligne["quantite"] : ''; ?>">
 
                         <label for="prix_u">Prix unitaire</label>
-                        <input onkeyup="setPrix()" type="number" name="prix_u" id="prix_u" placeholder="Prix unitaire" min="0" step="any">
+                        <input onkeyup="setPrix()" type="number" name="prix_u" id="prix_u" placeholder="Prix unitaire" min="0" step="any" value="<?php echo (!empty($edit_ligne)) ? ($edit_ligne["prix"] / $edit_ligne["quantite"]) : ''; ?>">
                         
                         <label for="prix">Prix total</label>
-                        <input type="number" name="prix" id="prix" placeholder="Veuillez saisir le prix" min="0" step="any">
+                        <input type="number" name="prix" id="prix" placeholder="Veuillez saisir le prix" min="0" step="any" value="<?php echo (!empty($edit_ligne)) ? $edit_ligne["prix"] : ''; ?>">
                         
+                        <button type="submit"><?php echo (!empty($_GET["edit_ligne"])) ? 'Modifier' : 'Ajouter'; ?></button>
+                        <?php if (!empty($_GET["edit_ligne"])): ?>
+                            <button type="button" onclick="window.location.href='vente.php?id_vente=<?= $_GET['id_vente'] ?>'" class="valider">Annuler</button>
+                        <?php endif; ?>
 
-                        <button type="submit">Ajouter</button>
                         <?php
                         if (!empty($_SESSION["message"]["text"])) {
                         ?>
@@ -99,7 +120,7 @@
                             <td><?= $prix_uni ?></td>
                             <td><?= $ligne["prix"] ?></td>
                             <td>
-                                <a onclick="modifierLigne(<?= $ligne['id'] ?>)" title="Modifier" style="color: blue !important; cursor: pointer;"><i class='bx bx-edit-alt'></i></a>
+                                <a href="vente.php?id_vente=<?= $_GET['id_vente'] ?>&edit_ligne=<?= $ligne['id'] ?>" title="Modifier" style="color: blue !important; cursor: pointer;"><i class='bx bx-edit-alt'></i></a>
                                 <a onclick="supprimerLigne(<?= $ligne['id'] ?>, <?= $_GET['id_vente'] ?>)" title="Supprimer" style="color: red !important; cursor: pointer;"><i class='bx bx-x-circle'></i></a>
                             </td>
                         </tr>
@@ -178,6 +199,12 @@
                     <?php
                             }
                         }
+                    }else {
+                    ?>
+                        <tr>
+                            <td colspan="5" style="text-align: center;">Aucun vente</td>
+                        </tr>
+                    <?php
                     }
                     ?>
                 </table>
@@ -227,4 +254,13 @@
             window.location.href = "../model/supprimerLigneVente.php?idLigne=" + idLigne + "&idVente=" + idVente;
         }
     }
+
+    // Ensure the price is properly calculated when the page loads (for edit mode)
+    window.onload = function() {
+        var quantiteField = document.getElementById('quantite');
+        if (quantiteField && quantiteField.value !== '') {
+            setPrix();
+        }
+    };
+
 </script>
