@@ -35,8 +35,11 @@
                 <div class="vabox">
                     <form action="<?php echo (!empty($_GET["edit_ligne"])) ? '../model/modifVenteLigne.php' : '../model/ajoutArticleVente.php'; ?>" method="post" id="article-form">
                         <input type="hidden" name="id_vente" value="<?= $_GET['id_vente'] ?>">
+                            
+                        <?php 
+                            $has_form_values = isset($_SESSION["form_values"]);
 
-                        <?php if (!empty($_GET["edit_ligne"])): 
+                            if (!empty($_GET["edit_ligne"])): 
                             // Fetch the ligne data for editing
                             $lignes = getVenteLignes($_GET["id_vente"]);
                             $edit_ligne = null;
@@ -53,13 +56,18 @@
 
                         <label for="id_article">Article</label>
                         <select onchange="remplirPrix()" name="id_article" id="id_article" class="tom-select">
-                            <option value="" disabled <?php echo (empty($_GET["edit_ligne"]) || empty($edit_ligne)) ? 'selected' : ''; ?>>Choisir un article</option>
+                            <option value="" disabled <?php echo (empty($_GET["edit_ligne"]) && !$has_form_values) ? 'selected' : ''; ?>>Choisir un article</option>
                             <?php 
                                 $articles = getArticle();
                                 if (!empty($articles) && is_array($articles)) {
                                     foreach ($articles as $key => $value) {
-                                        // Check if we're in edit mode and this is the selected article
-                                        $selected = (!empty($edit_ligne) && $edit_ligne["id_article"] == $value["id"]) ? 'selected' : '';
+                                        // Check if we're in edit mode, have form values, or this is the selected article
+                                        $selected = '';
+                                        if (!empty($edit_ligne) && $edit_ligne["id_article"] == $value["id"]) {
+                                            $selected = 'selected';
+                                        } elseif ($has_form_values && $_SESSION["form_values"]["id_article"] == $value["id"]) {
+                                            $selected = 'selected';
+                                        }
                                         echo "<option data-prix='{$value["prix_vente_unitaire"]}' value='{$value["id"]}' {$selected}>{$value["nom_article"]} - {$value["quantite"]} disponible</option>";                                   
                                     }
                                 }
@@ -67,13 +75,34 @@
                         </select>
 
                         <label for="quantite">Quantité</label>
-                        <input onkeyup="setPrix()" type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="1" value="<?php echo (!empty($edit_ligne)) ? $edit_ligne["quantite"] : ''; ?>">
+                        <input onkeyup="setPrix()" type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité" min="1" 
+                            value="<?php 
+                                   if (!empty($edit_ligne)) {
+                                       echo $edit_ligne["quantite"];
+                                   } elseif ($has_form_values) {
+                                       echo $_SESSION["form_values"]["quantite"];
+                                   } 
+                               ?>">
 
                         <label for="prix_u">Prix unitaire</label>
-                        <input onkeyup="setPrix()" type="number" name="prix_u" id="prix_u" placeholder="Prix unitaire" min="0" step="any" value="<?php echo (!empty($edit_ligne)) ? ($edit_ligne["prix"] / $edit_ligne["quantite"]) : ''; ?>">
+                        <input onkeyup="setPrix()" type="number" name="prix_u" id="prix_u" placeholder="Prix unitaire" min="0" step="any" 
+                            value="<?php 
+                                   if (!empty($edit_ligne)) {
+                                       echo ($edit_ligne["prix"] / $edit_ligne["quantite"]);
+                                   } elseif ($has_form_values) {
+                                       echo $_SESSION["form_values"]["prix_u"];
+                                   }
+                               ?>">
                         
                         <label for="prix">Prix total</label>
-                        <input type="number" name="prix" id="prix" placeholder="Veuillez saisir le prix" min="0" step="any" value="<?php echo (!empty($edit_ligne)) ? $edit_ligne["prix"] : ''; ?>">
+                        <input type="number" name="prix" id="prix" placeholder="Veuillez saisir le prix" min="0" step="any" 
+                            value="<?php 
+                                   if (!empty($edit_ligne)) {
+                                       echo $edit_ligne["prix"];
+                                   } elseif ($has_form_values) {
+                                       echo $_SESSION["form_values"]["prix"];
+                                   }
+                               ?>">
                         
                         <button type="submit"><?php echo (!empty($_GET["edit_ligne"])) ? 'Modifier' : 'Ajouter'; ?></button>
                         <?php if (!empty($_GET["edit_ligne"])): ?>
@@ -88,6 +117,10 @@
                             </div>
                         <?php 
                         unset($_SESSION["message"]); // Efface le message après affichage
+                        }
+
+                        if ($has_form_values) {
+                            unset($_SESSION["form_values"]);
                         }
                         ?>
                     </form>

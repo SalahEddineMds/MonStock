@@ -25,6 +25,14 @@ if (!empty($_POST["id_vente"]) && !empty($_POST["id_article"]) && !empty($_POST[
 
     // Check if there is enough stock
     if ($quantite > $stock_disponible) {
+        //store form values
+        $_SESSION["form_values"] = [
+            "id_article" => $id_article,
+            "quantite" => $quantite,
+            "prix_u" => $prix_unitaire_custom,
+            "prix" => $prix_unitaire_custom * $quantite
+        ];
+
         $_SESSION["message"]["text"] = "Quantité insuffisante en stock ! Disponible: $stock_disponible";
         $_SESSION["message"]["type"] = "danger";
         header("Location: ../vue/vente.php?id_vente=" . $id_vente);
