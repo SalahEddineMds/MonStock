@@ -709,3 +709,13 @@ ol.mtable li:nth-child(even) {
   font-weight: 500;
   transition: all 0.2s ease;
 }
+
+/* Style for sortable headers */
+.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+.sort-icon {
+  font-size: 0.8em;
+  margin-left: 5px;
+}
