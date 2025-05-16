@@ -131,10 +131,10 @@
                     <h3>Détails de la vente</h3>
                     <table id="details-vente-table" class="sortable-table mtable">
                         <tr>
-                            <th class="sortable" data-sort="article">Article <span class="sort-icon">↕</span></th>
-                            <th class="sortable" data-sort="quantite">Quantité <span class="sort-icon">↕</span></th>
-                            <th class="sortable" data-sort="prix_u">Prix unitaire <span class="sort-icon">↕</span></th>
-                            <th class="sortable" data-sort="prix">Prix total <span class="sort-icon">↕</span></th>
+                            <th class="sortable" data-sort="article">Article <span class="sort-icon"></span></th>
+                            <th class="sortable" data-sort="quantite">Quantité <span class="sort-icon"></span></th>
+                            <th class="sortable" data-sort="prix_u">Prix unitaire <span class="sort-icon"></span></th>
+                            <th class="sortable" data-sort="prix">Prix total <span class="sort-icon"></span></th>
                             <th>Action</th>
                         </tr>
                         <?php
@@ -203,9 +203,9 @@
                         
                 <table id="ventes-table" class="sortable-table mtable">
                     <tr>
-                        <th class="sortable" data-sort="client" style="cursor: pointer; user-select: none;">Client <span class="sort-icon">↕</span></th>
-                        <th class="sortable" data-sort="montant" style="cursor: pointer; user-select: none;">Montant <span class="sort-icon">↕</span></th>
-                        <th class="sortable" data-sort="date" style="cursor: pointer; user-select: none;">Date <span class="sort-icon">↕</span></th>
+                        <th class="sortable" data-sort="client">Client <span class="sort-icon"></span></th>
+                        <th class="sortable" data-sort="montant">Montant <span class="sort-icon"></span></th>
+                        <th class="sortable" data-sort="date">Date <span class="sort-icon"></span></th>
                         <th>Action</th>
                     </tr>
                     <?php
@@ -297,7 +297,7 @@
     };
 
     // Updated JavaScript that changes the sort icon content directly
-document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     // Get all sortable table headers
     const sortableHeaders = document.querySelectorAll('.sortable');
     
@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 sortableHeaders.forEach(h => {
                     h.classList.remove('sort-asc', 'sort-desc');
                     const icon = h.querySelector('.sort-icon');
-                    if (icon) icon.textContent = '↕'; // Reset icon
+                    if (icon) icon.textContent = ''; // Reset icon
                 });
                 this.classList.add('sort-asc');
                 sortIcon.textContent = '▲'; // Update the icon for ascending

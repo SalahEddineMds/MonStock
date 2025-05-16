@@ -96,10 +96,10 @@
                 <h3>Détails de l'achat</h3>
                 <table class="mtable">
                     <tr>
-                        <th class="sortable" data-sort="article">Article <span class="sort-icon">↕</span></th>
-                        <th class="sortable" data-sort="quantite">Quantité <span class="sort-icon">↕</span></th>
-                        <th class="sortable" data-sort="prix_u">Prix unitaire <span class="sort-icon">↕</span></th>
-                        <th class="sortable" data-sort="prix">Prix total <span class="sort-icon">↕</span></th>
+                        <th class="sortable" data-sort="article">Article <span class="sort-icon"></span></th>
+                        <th class="sortable" data-sort="quantite">Quantité <span class="sort-icon"></span></th>
+                        <th class="sortable" data-sort="prix_u">Prix unitaire <span class="sort-icon"></span></th>
+                        <th class="sortable" data-sort="prix">Prix total <span class="sort-icon"></span></th>
                         <th>Action</th>
                     </tr>
                     <?php
@@ -167,9 +167,9 @@
 
             <table class="mtable">
                 <tr>
-                    <th class="sortable" data-sort="fournisseur">Fournisseur <span class="sort-icon">↕</span></th>
-                    <th class="sortable" data-sort="montant">Montant <span class="sort-icon">↕</span></th>
-                    <th class="sortable" data-sort="date">Date <span class="sort-icon">↕</span></th>
+                    <th class="sortable" data-sort="fournisseur">Fournisseur <span class="sort-icon"></span></th>
+                    <th class="sortable" data-sort="montant">Montant <span class="sort-icon"></span></th>
+                    <th class="sortable" data-sort="date">Date <span class="sort-icon"></span></th>
                     <th>Action</th>
                 </tr>
                 <?php
@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 sortableHeaders.forEach(h => {
                     h.classList.remove('sort-asc', 'sort-desc');
                     const icon = h.querySelector('.sort-icon');
-                    if (icon) icon.textContent = '↕'; // Reset icon
+                    if (icon) icon.textContent = ''; // Reset icon
                 });
                 this.classList.add('sort-asc');
                 sortIcon.textContent = '▲'; // Update the icon for ascending
