@@ -132,9 +132,9 @@
                     <table id="details-vente-table" class="sortable-table mtable">
                         <tr>
                             <th class="sortable" data-sort="article">Article <span class="sort-icon"></span></th>
-                            <th class="sortable" data-sort="quantite">Quantité <span class="sort-icon"></span></th>
-                            <th class="sortable" data-sort="prix_u">Prix unitaire <span class="sort-icon"></span></th>
-                            <th class="sortable" data-sort="prix">Prix total <span class="sort-icon"></span></th>
+                            <th class="sortable" data-sort="montant">Quantité <span class="sort-icon"></span></th>
+                            <th class="sortable" data-sort="montant">Prix unitaire <span class="sort-icon"></span></th>
+                            <th class="sortable" data-sort="montant">Prix total <span class="sort-icon"></span></th>
                             <th>Action</th>
                         </tr>
                         <?php
@@ -220,7 +220,7 @@
                         ?>
                         <tr>                      
                             <td><?=$value["nom"]. " ".$value["prenom"] ?></td>
-                            <td><?= $value["total"] ?></td>
+                            <td><?=number_format($value["total"],2,".","")?></td>
                             <td><?=date("d/m/Y H:i:s", strtotime($value["date_vente"]))?></td>
                             <td>
                                 <a href="recuVente.php?id=<?= $value["id"]?>" title="Afficher le Reçu" style="color: blue !important;"><i class='bx bx-receipt'></i></a>

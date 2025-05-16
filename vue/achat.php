@@ -97,9 +97,9 @@
                 <table class="mtable">
                     <tr>
                         <th class="sortable" data-sort="article">Article <span class="sort-icon"></span></th>
-                        <th class="sortable" data-sort="quantite">Quantité <span class="sort-icon"></span></th>
-                        <th class="sortable" data-sort="prix_u">Prix unitaire <span class="sort-icon"></span></th>
-                        <th class="sortable" data-sort="prix">Prix total <span class="sort-icon"></span></th>
+                        <th class="sortable" data-sort="montant">Quantité <span class="sort-icon"></span></th>
+                        <th class="sortable" data-sort="montant">Prix unitaire <span class="sort-icon"></span></th>
+                        <th class="sortable" data-sort="montant">Prix total <span class="sort-icon"></span></th>
                         <th>Action</th>
                     </tr>
                     <?php

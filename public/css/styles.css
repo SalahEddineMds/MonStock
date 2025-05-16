@@ -696,13 +696,11 @@ ol.mtable li:nth-child(even) {
   box-shadow: 0 0 8px rgba(255, 0, 0, 0.7);
   background-color: rgba(255, 200, 200, 0.2);
   transition: all 0.3s ease;
-  z-index: 999;
 }
 
 .low-stock-row:hover {
   box-shadow: 0 0 12px rgba(255, 0, 0, 0.8);
   background-color: rgba(255, 200, 200, 0.3);
-  z-index: 999;
 }
 
 .top-sales-details li a:hover .product {
