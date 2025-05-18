@@ -70,7 +70,7 @@ function getClient($id=null, $DONNErecherche = array()) {
         if (!empty($telephone)) $recherche .= "AND telephone LIKE '%$telephone%' ";
         if (!empty($adresse)) $recherche .= "AND adresse LIKE '%$adresse%' ";
 
-        $sql = "SELECT * FROM client WHERE 1=1 $recherche";
+        $sql = "SELECT * FROM client WHERE etat='1' $recherche";
 
         $req = $GLOBALS["connexion"]->prepare($sql);
 
@@ -183,7 +183,7 @@ function getFournisseur($id=null, $DONNErecherche = array()) {
         if (!empty($telephone)) $recherche .= "AND telephone LIKE '%$telephone%' ";
         if (!empty($adresse)) $recherche .= "AND adresse LIKE '%$adresse%' ";
 
-        $sql = "SELECT * FROM fournisseur WHERE 1=1 $recherche";
+        $sql = "SELECT * FROM fournisseur WHERE etat='1' $recherche";
 
         $req = $GLOBALS["connexion"]->prepare($sql);
 
